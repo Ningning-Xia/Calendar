@@ -1,0 +1,7 @@
+*.DS_Store
+.settings/
+build/
+src/javaPK/AwsCredentials.properties
+.classpath
+.project
+
