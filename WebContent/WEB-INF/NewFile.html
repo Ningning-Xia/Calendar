@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script language="javascript" src="PopupCalendar.js" ></script>
+<title>Create Event</title>
+</head>
+<body>
+
+	<form method="post" action="CreateEventServlet">
+		Event Name:
+		<input type="text" name="ename" value="Untitled event" font = "1.1em"/> <p />
+		Start Time:  
+		<input readonly type="text" name="start-date" value="<%=currentMonthInt+1%>-<%=currentDayInt%>-<%=currentYearInt%>"
+		onClick="getDateString(this,oCalendarEn)"/> 
+		<select name="start-time">
+		<% for (int i = 0; i < 24; i++) {
+			if (i == currentHourInt) {
+				%>
+				<option selected value="<%=i%>"><%=i%>:00</option>
+			<%;}
+			else {
+			%>
+				<option value=" <%=i%>"> <%=i%>:00 </option>
+		<%;}
+		}	
+		%>
+		</select><p />
+		End Time:  
+		<input readonly type="text" name="end-date" value="<%=currentMonthInt+1%>-<%=currentDayInt%>-<%=currentYearInt%>" 
+		onClick="getDateString(this,oCalendarEn)"/> 
+		<select name="end-time">
+		<% for (int i = 0; i < 24; i++) {
+			if (i == currentHourInt) {
+				%>
+				<option selected value="<%=i%>"><%=i%>:00</option>
+			<%;}
+			else {
+			%>
+				<option value=" <%=i%>"> <%=i%>:00 </option>
+		<%;}
+		}	
+		%>
+		</select>
+		
+		
+
+		
+	</form>
+</body>
+</html>

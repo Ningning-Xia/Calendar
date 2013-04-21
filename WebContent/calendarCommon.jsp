@@ -1,12 +1,15 @@
-<%@ page import="com.devdaily.calendar.Month,java.util.*,java.io.*,java.sql.*,com.devdaily.*" %>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-	
+<%@ page import="com.devdaily.calendar.Month, java.util.*, java.io.*,java.sql.*" %>
+<%-- TODO: CLEAN UP THE PAGE TAG ABOVE --%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+
 <%
   // get the current year/month/day
   Calendar theCal = Calendar.getInstance();
   int currentYearInt  = theCal.get(Calendar.YEAR);
   int currentMonthInt = theCal.get(Calendar.MONTH);
   int currentDayInt   = theCal.get(Calendar.DATE);
+  int currentHourInt = theCal.get(Calendar.HOUR_OF_DAY);
   String currentYearString  = new Integer(currentYearInt).toString();
   String currentMonthString = new Integer(currentMonthInt).toString();
 

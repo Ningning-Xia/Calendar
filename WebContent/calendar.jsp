@@ -1,20 +1,30 @@
-<%@ page import="com.devdaily.calendar.Month, java.io.*, java.util.*,java.sql.*" %>
+<%@ page import="com.devdaily.calendar.Month, java.util.*,java.io.*,java.sql.*" %>
+<%-- TODO: CLEAN UP THE PAGE TAG ABOVE --%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%-- TODO: CLEAN UP THE PAGE TAG ABOVE --%>
 
 <%@ include file="calendarCommon.jsp" %>
 
 <html>
 <head>
   <title>devdaily.com calendar</title>
-  <link rel="StyleSheet" href="calendar.css" type="text/css" media="screen" />
+  <link rel="StyleSheet" href="./vcal.css" type="text/css" />
 </head>
 
-<body id="regular_page">
+<body>
+
+<table id="bar" width = "100%" >
+			<tr >
+				<th><a href = "CreateEvent.jsp">Create Event</a></th>
+				<th><a href = "ManageEvents.jsp">Manage Events</a></th>
+				<th><a href = "Invitations.jsp">Invitations</a></th>
+				<th><a href = "EmailTool.jsp">Email Tool</a></th>
+			</tr>			
+</table>
+<p />
 
 <div id="calendar_main_div">
-<table border="1" cellspacing="0" cellpadding="4" id="calendar_table">
+<table border="1" cellspacing="0" cellpadding="4" id="calendar_table" height = "70%" width = "50%" align = "center">
   <tr>
     <td width="100%" colspan="7" class="month_year_header">
       <%=monthName%>, <%=intYear%>
@@ -67,7 +77,7 @@
 
 <!-- navigation links -->
 <%-- sorry, i don't know how to get this look without a table --%>
-<table id="calendar_nav_table" border="0">
+<table id="calendar_nav_table" border="0"  align = "center" >
   <tr>
     <td id="prev_link">
       <form method="post">

@@ -17,7 +17,11 @@ body#regular_page #calendar_main_div {
 
 .month_year_header {
 	text-align: center;
-	color: darkblue;
+	font-size: 1.1em;
+	padding-top: 5px;
+	padding-bottom: 4px;
+	background-color: #A7C942;
+	color: #ffffff;
 }
 
 body#regular_page .month_year_header {
