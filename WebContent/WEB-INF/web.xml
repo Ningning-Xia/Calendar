@@ -9,4 +9,14 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>addEventServlet</display-name>
+    <servlet-name>addEventServlet</servlet-name>
+    <servlet-class>servlet.addEventServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>addEventServlet</servlet-name>
+    <url-pattern>/addEventServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
