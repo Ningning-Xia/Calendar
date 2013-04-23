@@ -1,0 +1,84 @@
+body {
+	font:1em/1.4 Verdana, Arial, Helvetica, sans-serif;
+	 background: url(../images/bg.jpg) top center no-repeat #545454;
+	 }
+
+
+#bar {
+	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	width: 100%;
+	border-collapse: collapse;
+}
+
+#bar td,#bar th {
+	font-size: 1em;
+	border: 1px solid #545454;
+	padding: 3px 7px 2px 7px;
+}
+
+#bar th {
+	font-size: 1.1em;
+	width: 25%;
+	text-align: center;
+	padding-top: 5px;
+	padding-bottom: 4px;
+	background-color: darkgray;
+	color: #ffffff;
+}
+
+#bar tr.alt td {
+	color: #000000;
+	background-color: #EAF2D3;
+}
+
+a {
+	color:#ffffff;
+}
+
+
+.month_year_header {
+	text-align: center;
+	font-size: 2em;
+	padding-top: 5px;
+	padding-bottom: 4px;
+	color: yellow;
+}
+
+
+#calendar_main_div {
+	width: 52em;
+	margin-left:auto; 
+    margin-right:auto;
+}
+#celendar_body_div {
+	width: 100%;
+	min-height: 200px;
+	align: center;
+	padding: 12px 0 0 20px;		
+	background: url(../images/tl.png) top left no-repeat; 
+}
+
+#calendar, #calendar_head {
+	width:100%; 
+	min-height: 200px;
+	cellspacing: 22px;
+
+}
+tr.week_header_row {
+	color: #ffffff;
+}
+td.day_cell, td.today_cell {
+	width:6em;
+	height:6em;
+	float:left;
+	margin:.4em; 
+	padding:.4em;
+	overflow:auto;
+	padding: 2px;
+	background: url(../images/day-bg.png) bottom right no-repeat; 
+	vertical-align: top;
+}
+					 
+td.empty_day_cell {
+	background: url(../images/day-bg-inactive.png);
+}

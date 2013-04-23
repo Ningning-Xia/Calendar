@@ -7,13 +7,13 @@
 
 <html>
 <head>
-  <title>devdaily.com calendar</title>
-  <link rel="StyleSheet" href="./vcal.css" type="text/css" />
+  <title>V-Cal</title>
+  <link rel="StyleSheet" href="./styles/calendar.css" type="text/css" />
 </head>
 
 <body>
 
-<table id="bar" width = "100%" >
+<table id="bar"  >
 			<tr >
 				<th><a href = "CreateEvent.jsp">Create Event</a></th>
 				<th><a href = "ManageEvents.jsp">Manage Events</a></th>
@@ -24,10 +24,24 @@
 <p />
 
 <div id="calendar_main_div">
-<table border="1" cellspacing="0" cellpadding="4" id="calendar_table" height = "70%" width = "50%" align = "center">
-  <tr>
-    <td width="100%" colspan="7" class="month_year_header">
+<table id = "calendar_head" cellspacing = "4px">
+  <tr><td></td>
+  <td id="prev_link">
+      <form method="post">
+        <input type="submit" name="PREV" value=" << ">
+        <input type="hidden" name="month" value="<%=prevMonth%>">
+        <input type="hidden" name="year" value="<%=prevYear%>">
+      </form>
+    </td>
+    <td width="100%" colspan="4" class="month_year_header">
       <%=monthName%>, <%=intYear%>
+    </td>
+    <td id="next_link">
+      <form method="post">
+        <input type="submit" name="NEXT" value=" >> ">
+        <input type="hidden" name="month" value="<%=nextMonth%>">
+        <input type="hidden" name="year" value="<%=nextYear%>">
+      </form>
     </td>
   </tr>
   <tr class="week_header_row">
@@ -39,6 +53,10 @@
     <th width="15%" class="th_day_cell day">Fri</th>
     <th width="15%" class="th_day_cell day">Sat</th>
   </tr>
+  </table>
+  
+  <div id = "celendar_body_div">
+  <table id="calendar" cellspacing = "4px">
 <%
 {
   Month aMonth = Month.getMonth( Integer.parseInt(currentMonthString), Integer.parseInt(currentYearString) );
@@ -57,7 +75,7 @@
         // this is "today"
         if( currentDayInt == days[i][j] && currentMonthInt == aMonth.getMonth() && currentYearInt == aMonth.getYear() )
         {
-          %><td class="today_cell"><%=days[i][j]%></td><%
+          %><td class="today_cell"> <font color = "red"><%=days[i][j]%></font></td><%
         }
         else
         {
@@ -71,38 +89,10 @@
 }
 %>
 </table>
-
+</div>
 <%-- end of "calendar_div" --%>
 </div>
 
-<!-- navigation links -->
-<%-- sorry, i don't know how to get this look without a table --%>
-<table id="calendar_nav_table" border="0"  align = "center" >
-  <tr>
-    <td id="prev_link">
-      <form method="post">
-        <input type="submit" name="PREV" value=" << ">
-        <input type="hidden" name="month" value="<%=prevMonth%>">
-        <input type="hidden" name="year" value="<%=prevYear%>">
-      </form>
-    </td>
-    <td id="link_to_month_view">
-      <form action="calendarMonthPrintView.jsp" method="post">
-        <input type="submit" value="  Full-Screen Print View  " class="submit_button">
-        <input type="hidden" name="month" value="<%=intMonth%>">
-        <input type="hidden" name="year"  value="<%=intYear%>">
-      </form>
-    </td>
-    <td id="next_link">
-      <form method="post">
-        <input type="submit" name="NEXT" value=" >> ">
-        <input type="hidden" name="month" value="<%=nextMonth%>">
-        <input type="hidden" name="year" value="<%=nextYear%>">
-      </form>
-    </td>
-  </tr>
-</table>
-  <!-- navigation links end -->
 
 </body>
 </html>

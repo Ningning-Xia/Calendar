@@ -12,8 +12,8 @@ function PopupCalendar(InstanceName)
 	this.Width=200;
 	this.currDate=new Date();
 	this.today=new Date();
-	this.startYear=1970;
-	this.endYear=2010;
+	this.startYear=2000;
+	this.endYear=2020;
 	///Css
 	this.normalfontColor="#666666";
 	this.selectedfontColor="red";
@@ -53,7 +53,12 @@ function CalendarInit()				///Create panel
 	htmloYear="<select id='"+this.sYEARID+"' onchange=CalendarYearChange("+this.instanceName+") style='width:50%'>";
 	for(i=this.startYear;i<=this.endYear;i++)
 	{
-		htmloYear+="<option value='"+i+"'>"+i+"</option>";
+		if (i == this.today.getFullYear()) {
+			htmloYear+="<option selected value='"+i+"'>"+i+"</option>";
+		} else {
+			htmloYear+="<option value='"+i+"'>"+i+"</option>";
+		}
+		
 	}
 	htmloYear+="</select></div>";
 	/// Day
@@ -125,7 +130,7 @@ function CalendarFill()			///
 		if(rowIndex==1)cellIndex = sWeekDay;
 		for(;cellIndex<currRow.cells.length;cellIndex++)
 		{
-			if(iDaySn==sToday)
+			if(iDaySn== this.today.getDate())
 			{
 				currRow.cells[cellIndex].innerHTML="<font color='"+this.selectedfontColor+"'><i><b>"+iDaySn+"</b></i></font>";
 				this.oPreviousCell=currRow.cells[cellIndex];
