@@ -33,15 +33,26 @@ body {
 
 a {
 	color:#ffffff;
+	text-decoration:none
+}
+a:link {text-decoration: none}
+a:hover {text-decoration: underline; color: yellow;}
+
+
+.submit {
+  margin: 0;
+  border: none;
+  text-align: center;
+  padding-left: 40px;
+  background-color: transparent
 }
 
-
-.month_year_header {
+.month_year_header, .submit {
 	text-align: center;
 	font-size: 2em;
 	padding-top: 5px;
 	padding-bottom: 4px;
-	color: yellow;
+	color: yellow
 }
 
 
@@ -82,3 +93,4 @@ td.day_cell, td.today_cell {
 td.empty_day_cell {
 	background: url(../images/day-bg-inactive.png);
 }
+

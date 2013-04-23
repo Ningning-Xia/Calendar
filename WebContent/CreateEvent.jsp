@@ -23,10 +23,9 @@
 	 var date1 = new Date(sdate[2],sdate[0],sdate[1],stime);
 	 var date2 = new Date(edate[2],edate[0],edate[1],etime);
 	 
-	 if (date2 < date1) {
-		
-		 document.getElementById("end-date").style.backgroundColor="#fff0f0";
-		 document.getElementById("end-time").style.backgroundColor="#fff0f0";
+	 if (date2 < date1) {		
+		 document.getElementById("end-date").style.backgroundColor= "lightblue";
+		 document.getElementById("end-time").style.backgroundColor="lightblue";
 		 alert("Sorry, you can't create an event that ends before it starts.");
 		 return false;
 	 }
@@ -40,7 +39,7 @@
         if (! email.equals("")) {
         	for (i = 0; i < email.length; i++){
         		if(!re.test(email[i])) {       		
-        			document.getElementById("invitelist").style.backgroundColor="#fff0f0";
+        			document.getElementById("invitelist").style.backgroundColor="lightblue";
         			alert("Your input " + email[i]+" is not a valid email address.");
         			return false;
         		}        	
@@ -59,7 +58,8 @@ var oCalendarEn=new PopupCalendar("oCalendarEn");
 oCalendarEn.Init();
 </script>
 
-	<form method="post" action="addEventServlet" onsubmit = "return validate();">
+	<form method="post" name = "event_form" action="addEventServlet" onsubmit = "return validate();">
+		<br>
 		<br>
 		<br>
 		<table id = "create-event" >
@@ -116,12 +116,15 @@ oCalendarEn.Init();
 		<td><input type="file" name="video" size="50" /></td></tr>
 		
 		<tr><th>Invite Friend:</th>
-		<td>(Please input the email addresses, separate by ';') <br>
-		<textarea name = "invitelist" id = "invitelist"></textarea></td></tr>
+		<td>
+		<textarea class = "text"
+		onfocus="if(this.value==this.defaultValue)this.value=''" 
+		onblur="if(this.value=='')this.value=this.defaultValue">(Input email addresses, separated by ';')
+		</textarea></td></tr>
 		
 		<tr><th>Description:</th>
 		<td>
-		<textarea name = "description"> </textarea></td></tr>
+		<textarea class = "text"> </textarea></td></tr>
 		
 		<tr><th>Privacy:</th>
 		<td>
@@ -129,15 +132,12 @@ oCalendarEn.Init();
 		<input type="radio" name = "privacy" value="public" checked> Public 
 		<input type="radio" name = "privacy" value="invited"> Invited Only 
 		</td></tr>
-					
-	
-		
-		<p />
 		<tr><td></td>
 		<td> <p/>
-		<input type = "submit" value = "Submit" /> 
-		<input type = "reset" value = "Reset" />
-		<input type = "button" value = "Discard" onclick="history.go(-1)"/></td></tr>
+		
+		<input type = "submit" class = "button" value = "Submit"/> 
+		<input type = "reset" class = "button" value = "Reset"/>	
+		<input type = "button" class = "button" value = "Discard" onclick="history.go(-1)"/></td></tr>
 			</table>
 
 	</form>

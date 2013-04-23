@@ -25,20 +25,20 @@
 
 <div id="calendar_main_div">
 <table id = "calendar_head" cellspacing = "4px">
-  <tr><td></td>
+  <tr>
   <td id="prev_link">
       <form method="post">
-        <input type="submit" name="PREV" value=" << ">
+        <input type="submit" class = "submit" name="PREV" value=" << ">
         <input type="hidden" name="month" value="<%=prevMonth%>">
         <input type="hidden" name="year" value="<%=prevYear%>">
       </form>
     </td>
-    <td width="100%" colspan="4" class="month_year_header">
+    <td width="100%" colspan="5" class="month_year_header">
       <%=monthName%>, <%=intYear%>
     </td>
     <td id="next_link">
       <form method="post">
-        <input type="submit" name="NEXT" value=" >> ">
+        <input type="submit" class = "submit" name="NEXT" value=" >> ">
         <input type="hidden" name="month" value="<%=nextMonth%>">
         <input type="hidden" name="year" value="<%=nextYear%>">
       </form>
