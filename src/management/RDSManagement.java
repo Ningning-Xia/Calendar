@@ -23,11 +23,12 @@ public class RDSManagement {
 
 	public static void main(String[] args) {
 		System.out.println("Test");
-		ArrayList<String> emailList = new ArrayList<String>();
-		emailList.add("test1@gmail.com");
-		emailList.add("test9@gmail.com");
+		//ArrayList<String> emailList = new ArrayList<String>();
+		//emailList.add("test1@gmail.com");
+		//emailList.add("test9@gmail.com");
 
-		findUidByEmail(emailList);
+		//findUidByEmail(emailList);
+		getEventsByTime(2);
 
 	}
 
@@ -35,8 +36,8 @@ public class RDSManagement {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			String url = DBurl;
-			conn = DriverManager.getConnection(url, "admin", "12345678");
-
+			//conn = DriverManager.getConnection(url, "admin", "12345678");
+			conn = DriverManager.getConnection(url, "root", "12345678");
 			if (conn != null) {
 				System.out.println("get datasource succeed!");
 			}
@@ -100,9 +101,12 @@ public class RDSManagement {
 		ArrayList<Event> eventList = new ArrayList<Event>();
 		try {
 			ArrayList<ArrayList<String>> uidList = new ArrayList<ArrayList<String>>();
+			for (int i = 0; i < 4; i++){
+				uidList.add(new ArrayList<String>());
+			}
 			String sql = "select * from event where uid = " + uid
-					+ " order by e.eid DESC";
-			System.out.println("Select all events for user" + uid
+					+ " order by eid DESC";
+			System.out.println("Select all events for user " + uid
 					+ " sorted by create time");
 
 			st = (Statement) conn.createStatement();
@@ -112,22 +116,23 @@ public class RDSManagement {
 			while (rs.next()) {
 				eid = Integer.parseInt(rs.getString("eid"));
 				ename = rs.getString("ename");
-				startTime = rs.getString("starTime");
+				startTime = rs.getString("startTime");
 				endTime = rs.getString("endTime");
 				location = rs.getString("location");
 				description = rs.getString("description");
 				video = rs.getString("video");
 				pic = rs.getString("pic");
 				privacy = Integer.parseInt(rs.getString("privacy"));
-
-				sql = "select distinct uid, action from invitation where eid = "
+				System.out.println("event id: "+ eid);
+				sql = "select userName, action from invitation i JOIN user u on i.uid = u.uid where i.eid = "
 						+ eid;
 				st = (Statement) conn.createStatement();
 				ResultSet rs_tmp = st.executeQuery(sql);
 				while (rs_tmp.next()) {
-					int uid_tmp = Integer.parseInt(rs.getString("uid"));
-					int action = Integer.parseInt(rs.getString("action"));
-					uidList.get(action).add(findNameByUid(uid_tmp));
+					String userName = rs_tmp.getString("userName");
+					int action = Integer.parseInt(rs_tmp.getString("action"));
+					uidList.get(action).add(userName);
+					System.out.println("Event id: "+eid+" user: "+userName + " action: " + action);
 				}
 
 				Event event = new Event(eid, uid, ename, startTime, endTime,
@@ -193,8 +198,5 @@ public class RDSManagement {
 		return uidList;
 	}
 
-	public static String findNameByUid(int uid) {
-		return "";
-	}
 
 }

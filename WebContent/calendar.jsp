@@ -8,15 +8,26 @@
 <html>
 <head>
   <title>V-Cal</title>
-  <link rel="StyleSheet" href="./styles/calendar.css" type="text/css" />
+  <link rel="stylesheet" href="fancybox/source/jquery.fancybox.css?v=2.1.4" type="text/css" media="screen" />
+  <link rel="StyleSheet" href="styles/calendar.css" type="text/css" />
+  <script type="text/javascript" src="fancybox/lib/jquery-1.9.0.min.js"></script>
+<script type="text/javascript" src="fancybox/lib/jquery.mousewheel-3.0.6.pack.js"></script>
+<script type="text/javascript" src="fancybox/source/jquery.fancybox.pack.js?v=2.1.4"></script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".fancybox").fancybox();
+	});
+</script>
 </head>
 
 <body>
 
 <table id="bar"  >
 			<tr >
-				<th><a href = "CreateEvent.jsp">Create Event</a></th>
-				<th><a href = "ManageEvents.jsp">Manage Events</a></th>
+			<th><a class="fancybox fancybox.iframe" rel="group" href="CreateEvent.jsp">Create Event</a>
+				<a href = "CreateEvent.jsp">Create Event</a></th>
+				<th><a href = "listEventServlet">Manage Events</a></th>
 				<th><a href = "Invitations.jsp">Invitations</a></th>
 				<th><a href = "EmailTool.jsp">Email Tool</a></th>
 			</tr>			
