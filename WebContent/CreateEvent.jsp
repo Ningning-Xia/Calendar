@@ -6,10 +6,24 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<script language="javascript" src="PopupCalendar.js" ></script>
  <link rel="StyleSheet" href="./styles/create_event.css" type="text/css" />
- 
+ <link rel="stylesheet" type="text/css" media="all" href="./styles/jsDatePick_ltr.min.css" />
+ <script type="text/javascript" src="jsDatePick.min.1.3.js"></script>
  <script language="javascript">
+ window.onload = function(){
+		calendar1 = new JsDatePick({
+			useMode:2,
+			target:"start-date",
+			cellColorScheme:"aqua",
+		});
+		calendar2 = new JsDatePick({
+			useMode:2,
+			target:"end-date",
+
+			cellColorScheme:"aqua",
+		});
+	};
+ 
  function validate() {	
 	 var flag = checkDate() && checkEmail(); 
 	 return flag; 
@@ -73,8 +87,7 @@ oCalendarEn.Init();
 		<tr>
 			<th>Start Time:  </th>
 			<td><input readonly type="text" name="start-date" id = "start-date" 
-			value="<%=currentMonthInt+1%>-<%=currentDayInt%>-<%=currentYearInt%>"
-			onClick="getDateString(this,oCalendarEn)"/>
+			value="<%=currentMonthInt+1%>-<%=currentDayInt%>-<%=currentYearInt%>" />
 			<select name="start-time" id = "start-time">
 			<% 
 			for (int i = 0; i < 24; i++) {
@@ -90,8 +103,7 @@ oCalendarEn.Init();
 		<tr>
 			<th>End Time: </th>
 			<td><input readonly type="text" name="end-date"  id = "end-date" 
-			value="<%=currentMonthInt+1%>-<%=currentDayInt%>-<%=currentYearInt%>" 
-			onClick="getDateString(this,oCalendarEn)"/> 
+			value="<%=currentMonthInt+1%>-<%=currentDayInt%>-<%=currentYearInt%>" /> 
 			<select name="end-time" id= "end-time">
 			<%			
 			for (int i = 0; i < 24; i++) {
