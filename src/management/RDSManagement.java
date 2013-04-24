@@ -5,28 +5,30 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
+
 import java.util.ArrayList;
 
 import model.Event;
 
 public class RDSManagement {
 
-	//public static String DBurl = "jdbc:mysql://mycalendar.cthu6j2tpw8v.us-east-1.rds.amazonaws.com:3306/mycalendar";
+	// public static String DBurl =
+	// "jdbc:mysql://mycalendar.cthu6j2tpw8v.us-east-1.rds.amazonaws.com:3306/mycalendar";
 	public static String DBurl = "jdbc:mysql://localhost:3306/mycalendar";
 	public static Connection conn;
 	public static Statement st;
 
 	public RDSManagement() {
-
 	}
 
 	public static void main(String[] args) {
 		System.out.println("Test");
-		addEvent(4, "test4_Event", "04-13-2013 9:00 ", "04-13-2013 10:00 ", "Columbia University" , 
-				"Description", null, null, 1);
+		ArrayList<String> emailList = new ArrayList<String>();
+		emailList.add("test1@gmail.com");
+		emailList.add("test9@gmail.com");
+
+		findUidByEmail(emailList);
+
 	}
 
 	public static Connection getConnection() {
@@ -66,15 +68,16 @@ public class RDSManagement {
 			}
 			int newEid = maxEid + 1;
 
-			String sql = "insert into Event value(" + newEid + "," + uid + ", \'" + event_name
-					+ "\',\'" + start_time + "\',\'" + end_time + "\',\'" 
-					+ location + "\',\'" + pic_URL + "\',\'"+ video_URL
-					+ "\',\'" + description + "\'," + privacy + ");";
-			
+			String sql = "insert into Event value(" + newEid + "," + uid
+					+ ", \'" + event_name + "\',\'" + start_time + "\',\'"
+					+ end_time + "\',\'" + location + "\',\'" + pic_URL
+					+ "\',\'" + video_URL + "\',\'" + description + "\',"
+					+ privacy + ");";
+
 			System.out.println(sql);
 
 			int count = st.executeUpdate(sql);
-			
+
 			System.out.println("Inserted " + count + " items into Event");
 
 		} catch (SQLException e) {
@@ -91,17 +94,19 @@ public class RDSManagement {
 			}
 		}
 	}
-	
+
 	public static ArrayList<Event> getEventsByTime(int uid) {
 		conn = getConnection();
 		ArrayList<Event> eventList = new ArrayList<Event>();
 		try {
 			ArrayList<ArrayList<String>> uidList = new ArrayList<ArrayList<String>>();
-			String sql = "select * from event where uid = " + uid + " order by e.eid DESC";
-			System.out.println("Select all events for user" + uid +" sorted by create time");
-			
+			String sql = "select * from event where uid = " + uid
+					+ " order by e.eid DESC";
+			System.out.println("Select all events for user" + uid
+					+ " sorted by create time");
+
 			st = (Statement) conn.createStatement();
-			String ename, startTime, endTime, location, pic, video,	description;
+			String ename, startTime, endTime, location, pic, video, description;
 			int eid, privacy;
 			ResultSet rs = st.executeQuery(sql);
 			while (rs.next()) {
@@ -114,27 +119,30 @@ public class RDSManagement {
 				video = rs.getString("video");
 				pic = rs.getString("pic");
 				privacy = Integer.parseInt(rs.getString("privacy"));
-				
-				sql = "select distinct uid, action from invitation where eid = " + eid;
+
+				sql = "select distinct uid, action from invitation where eid = "
+						+ eid;
 				st = (Statement) conn.createStatement();
 				ResultSet rs_tmp = st.executeQuery(sql);
-				while (rs_tmp.next()){
+				while (rs_tmp.next()) {
 					int uid_tmp = Integer.parseInt(rs.getString("uid"));
 					int action = Integer.parseInt(rs.getString("action"));
-					uidList.get(action).add(findNameByUid(uid_tmp));						
-				}	
+					uidList.get(action).add(findNameByUid(uid_tmp));
+				}
 
-				
 				Event event = new Event(eid, uid, ename, startTime, endTime,
-						location, pic, video, description, privacy);
+						location, pic, video, description, privacy, uidList);
 				eventList.add(event);
-				System.out.println("Event :id " + eid + " name " + ename + " start time " + startTime);
+				System.out.println("Event :id " + eid + " name " + ename
+						+ " start time " + startTime);
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-		}finally {
+
+		} finally {
+
 			try {
 				st.close();
 				conn.close();
@@ -143,10 +151,49 @@ public class RDSManagement {
 				e.printStackTrace();
 			}
 		}
+
 		return eventList;
 	}
-	
-	public static String findNameByUid(int uid){
+
+	public static ArrayList<Integer> findUidByEmail(ArrayList<String> emailList) {
+		ArrayList<Integer> uidList = new ArrayList<Integer>();
+		try {
+			conn = getConnection();
+			st = (Statement) conn.createStatement();
+
+			for (String email : emailList) {
+				String sql = "select uid from User where email = '" + email
+						+ "';";
+				ResultSet rs = st.executeQuery(sql);
+				int uid;
+				if (rs.next()) {
+					uid = Integer.parseInt(rs.getString("uid"));
+					uidList.add(uid);
+					System.out.println("User: id " + uid);
+				} else {
+					System.out.println("User: " + email
+							+ " is not in our system");
+				}
+
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+
+		} finally {
+			try {
+				st.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return uidList;
+	}
+
+	public static String findNameByUid(int uid) {
 		return "";
 	}
 
