@@ -17,7 +17,7 @@
 			<tr >
 				<th><a href = "CreateEvent.jsp">Create Event</a></th>
 				<th><a href = "ManageEvents.jsp">Manage Events</a></th>
-				<th><a href = "Invitations.jsp">Invitations</a></th>
+				<th><a href = "listInvitationServlet">Invitations</a></th>
 				<th><a href = "EmailTool.jsp">Email Tool</a></th>
 			</tr>			
 </table>

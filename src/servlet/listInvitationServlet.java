@@ -45,7 +45,7 @@ public class listInvitationServlet extends HttpServlet {
 		ArrayList<Invitation> inviteList = rds.getInvitationByUid(uid);
 		
 		request.setAttribute("inviteList", inviteList);
-		RequestDispatcher view = request.getRequestDispatcher("Invitations.jsp");
+		RequestDispatcher view = request.getRequestDispatcher("Invitation.jsp");
 		view.forward(request, response);
 	}
 
