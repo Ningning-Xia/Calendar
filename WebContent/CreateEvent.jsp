@@ -128,9 +128,9 @@ oCalendarEn.Init();
 		
 		<tr><th>Privacy:</th>
 		<td>
-		<input type="radio" name = "privacy" value="private"> Private 
-		<input type="radio" name = "privacy" value="public" checked> Public 
-		<input type="radio" name = "privacy" value="invited"> Invited Only 
+		<input type="radio" name = "privacy" value="1"> Private 
+		<input type="radio" name = "privacy" value="2" checked> Public 
+		<input type="radio" name = "privacy" value="3"> Invited Only 
 		</td></tr>
 		<tr><td></td>
 		<td> <p/>

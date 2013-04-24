@@ -1,22 +1,25 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Date;
  
 public class Event {
 
+	int eid;
+	int uid;
 	String event_name;
-	Date start_time;
-	Date end_time;
+	String start_time;
+	String end_time;
 	String location;
 	String pic_URL;
 	String video_URL;
 	String description;
-	ArrayList<String> invited_list;
+	int privacy;
 	
-	public Event(String event_name, Date start_time, Date end_time,
+	public Event(int eid, int uid, String event_name, String start_time, String end_time,
 			String location, String pic_URL, String video_URL,
-			String description, ArrayList<String> invited_list) {
+			String description, int privacy) {
+		this.eid = eid;
+		this.uid = uid;
 		this.event_name = event_name;
 		this.start_time = start_time;
 		this.end_time = end_time;
@@ -24,7 +27,7 @@ public class Event {
 		this.pic_URL = pic_URL;
 		this.video_URL = video_URL;
 		this.description = description;
-		this.invited_list = invited_list;
+		this.privacy = privacy;
 	}
 	
 	public String getEvent_name() {
@@ -33,16 +36,16 @@ public class Event {
 	public void setEvent_name(String event_name) {
 		this.event_name = event_name;
 	}
-	public Date getStart_time() {
+	public String getStart_time() {
 		return start_time;
 	}
-	public void setStart_time(Date start_time) {
+	public void setStart_time(String start_time) {
 		this.start_time = start_time;
 	}
-	public Date getEnd_time() {
+	public String getEnd_time() {
 		return end_time;
 	}
-	public void setEnd_time(Date end_time) {
+	public void setEnd_time(String end_time) {
 		this.end_time = end_time;
 	}
 	public String getLocation() {
@@ -69,12 +72,28 @@ public class Event {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public ArrayList<String> getInvited_list() {
-		return invited_list;
+	public int getPrivacy() {
+		return privacy;
 	}
-	public void setInvited_list(ArrayList<String> invited_list) {
-		this.invited_list = invited_list;
+
+	public void setPrivacy(int privacy) {
+		this.privacy = privacy;
 	}
-	
+
+	public int getEid() {
+		return eid;
+	}
+
+	public void setEid(int eid) {
+		this.eid = eid;
+	}
+
+	public int getUid() {
+		return uid;
+	}
+
+	public void setUid(int uid) {
+		this.uid = uid;
+	}
 	
 }

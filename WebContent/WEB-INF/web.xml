@@ -19,4 +19,14 @@
     <servlet-name>addEventServlet</servlet-name>
     <url-pattern>/addEventServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>listEventServlet</display-name>
+    <servlet-name>listEventServlet</servlet-name>
+    <servlet-class>servlet.listEventServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>listEventServlet</servlet-name>
+    <url-pattern>/listEventServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
