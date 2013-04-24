@@ -13,8 +13,8 @@ import model.Event;
 public class RDSManagement {
 
 	// public static String DBurl =
-	// "jdbc:mysql://mycalendar.cthu6j2tpw8v.us-east-1.rds.amazonaws.com:3306/mycalendar";
-	public static String DBurl = "jdbc:mysql://localhost:3306/mycalendar";
+	public static String DBurl = "jdbc:mysql://mycalendar.cthu6j2tpw8v.us-east-1.rds.amazonaws.com:3306/mycalendar";
+	//public static String DBurl = "jdbc:mysql://localhost:3306/mycalendar";
 	public static Connection conn;
 	public static Statement st;
 
@@ -23,11 +23,13 @@ public class RDSManagement {
 
 	public static void main(String[] args) {
 		System.out.println("Test");
-		ArrayList<String> emailList = new ArrayList<String>();
-		emailList.add("test1@gmail.com");
-		emailList.add("test9@gmail.com");
+		ArrayList<Integer> emailList = new ArrayList<Integer>();
+		emailList.add(1);
+		emailList.add(2);
 
-		findUidByEmail(emailList);
+		addInvitation(1, emailList);		
+
+		//AddEmailList(1,"test1@gmail.com; test2@gmail.com");
 
 	}
 
@@ -53,9 +55,10 @@ public class RDSManagement {
 		return conn;
 	}
 
-	public static void addEvent(int uid, String event_name, String start_time,
+	public static int addEvent(int uid, String event_name, String start_time,
 			String end_time, String location, String pic_URL, String video_URL,
 			String description, int privacy) {
+		int newEid = 0;
 		try {
 			conn = getConnection();
 			String findMaxEidSql = "select MAX(eid) maxEid from Event;";
@@ -64,9 +67,11 @@ public class RDSManagement {
 			int maxEid = 0;
 			ResultSet rs = st.executeQuery(findMaxEidSql);
 			while (rs.next()) {
+				if (rs.getString("maxEid") != null) {
 				maxEid = Integer.parseInt(rs.getString("maxEid"));
+				}
 			}
-			int newEid = maxEid + 1;
+			newEid = maxEid + 1;
 
 			String sql = "insert into Event value(" + newEid + "," + uid
 					+ ", \'" + event_name + "\',\'" + start_time + "\',\'"
@@ -93,6 +98,8 @@ public class RDSManagement {
 				e.printStackTrace();
 			}
 		}
+		return newEid;
+		
 	}
 
 	public static ArrayList<Event> getEventsByTime(int uid) {
@@ -191,6 +198,81 @@ public class RDSManagement {
 			}
 		}
 		return uidList;
+	}
+	
+	public static void addInvitation(int eid, ArrayList<Integer> userList) {
+		try {
+			conn = getConnection();
+			st = (Statement) conn.createStatement();
+
+			for (int uid : userList) {
+				String searchSql = "select * from Invitation where eid = " + eid 
+						+ " and uid = " + uid + ";";
+				System.out.println(searchSql);
+				ResultSet rs = st.executeQuery(searchSql);
+				if (rs.next()){
+					System.out.println("Duplicated Invitation");
+					continue;
+				}
+				
+				String sql = "insert into Invitation value(" + eid 
+						+ "," + uid + "," + 0  + ");";
+				
+				System.out.println(sql);
+				st.executeUpdate(sql);
+				System.out.println("Inserted uid: " + uid + " eid " + eid + "  into Invitation");
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				st.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public static void addEmailList(int eid, String emailList) {
+		try {
+			conn = getConnection();
+			String findMaxEmidSql = "select MAX(emid) maxEmid from EmailList;";
+			st = (Statement) conn.createStatement();
+
+			int maxEmid = 0;
+			ResultSet rs = st.executeQuery(findMaxEmidSql);
+			while (rs.next()) {
+				if (rs.getString("maxEmid") != null) {
+					maxEmid = Integer.parseInt(rs.getString("maxEmid"));
+				}
+			}
+			int newEmid = maxEmid + 1;
+
+			String sql = "insert into EmailList value(" + newEmid + "," + eid
+					+ ", \'" + emailList + "\');";
+			
+			System.out.println(sql);
+			int count = st.executeUpdate(sql);
+
+			System.out.println("Inserted " + count + " items into EmailList");
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				st.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public static String findNameByUid(int uid) {

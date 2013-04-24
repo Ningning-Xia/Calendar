@@ -128,7 +128,7 @@ oCalendarEn.Init();
 		
 		<tr><th>Invite Friend:</th>
 		<td>
-		<textarea class = "text"
+		<textarea name="invitelist" class = "text"
 		onfocus="if(this.value==this.defaultValue)this.value=''" 
 		onblur="if(this.value=='')this.value=this.defaultValue">(Input email addresses, separated by ';')
 		</textarea></td></tr>
