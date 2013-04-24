@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import model.Event;
+import model.Invitation;
 
 public class RDSManagement {
 
@@ -22,15 +23,16 @@ public class RDSManagement {
 	}
 
 	public static void main(String[] args) {
-		System.out.println("Test");
+/*		System.out.println("Test");
 		ArrayList<Integer> emailList = new ArrayList<Integer>();
 		emailList.add(1);
 		emailList.add(2);
 
-		addInvitation(1, emailList);		
+		addInvitation(1, emailList);	*/	
 
 		//AddEmailList(1,"test1@gmail.com; test2@gmail.com");
 
+		getInvitationByUid(1);
 	}
 
 	public static Connection getConnection() {
@@ -235,6 +237,42 @@ public class RDSManagement {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public static ArrayList<Invitation> getInvitationByUid(int uid) {
+		ArrayList<Invitation> invitationList = new ArrayList<Invitation>();
+		try {
+			conn = getConnection();
+			st = (Statement) conn.createStatement();
+			
+			String sql = "select i.eid, e.ename, i.uid, u.username, i.action" +
+					" from Invitation i, Event e, User u where i.uid = u.uid and" +
+					" e.eid = i.eid and u.uid = " + uid + ";";
+			System.out.println(sql);
+			ResultSet rs = st.executeQuery(sql);
+			while (rs.next()) {
+				int eid = Integer.parseInt(rs.getString("eid"));
+				String ename = rs.getString("ename");
+				String uname = rs.getString("username");
+				int action = Integer.parseInt(rs.getString("action"));
+				Invitation invitation = new Invitation(eid, ename, uid, uname, action);
+				System.out.println("eid " +eid + " uid " + uid + " action " + action);
+				invitationList.add(invitation);
+			}			
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				st.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return invitationList;
 	}
 	
 	public static void addEmailList(int eid, String emailList) {
