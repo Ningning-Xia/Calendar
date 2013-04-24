@@ -14,10 +14,13 @@ public class Event {
 	String video_URL;
 	String description;
 	int privacy;
+	ArrayList<ArrayList<String>> users;
 	
-	public Event(int eid, int uid, String event_name, String start_time, String end_time,
-			String location, String pic_URL, String video_URL,
-			String description, int privacy) {
+	
+	
+	public Event(int eid, int uid, String event_name, String start_time,
+			String end_time, String location, String pic_URL, String video_URL,
+			String description, int privacy, ArrayList<ArrayList<String>> users) {
 		this.eid = eid;
 		this.uid = uid;
 		this.event_name = event_name;
@@ -28,8 +31,21 @@ public class Event {
 		this.video_URL = video_URL;
 		this.description = description;
 		this.privacy = privacy;
+		this.users = users;
 	}
 	
+	public int getEid() {
+		return eid;
+	}
+	public void setEid(int eid) {
+		this.eid = eid;
+	}
+	public int getUid() {
+		return uid;
+	}
+	public void setUid(int uid) {
+		this.uid = uid;
+	}
 	public String getEvent_name() {
 		return event_name;
 	}
@@ -75,25 +91,15 @@ public class Event {
 	public int getPrivacy() {
 		return privacy;
 	}
-
 	public void setPrivacy(int privacy) {
 		this.privacy = privacy;
 	}
-
-	public int getEid() {
-		return eid;
+	public ArrayList<ArrayList<String>> getUsers() {
+		return users;
+	}
+	public void setUsers(ArrayList<ArrayList<String>> users) {
+		this.users = users;
 	}
 
-	public void setEid(int eid) {
-		this.eid = eid;
-	}
-
-	public int getUid() {
-		return uid;
-	}
-
-	public void setUid(int uid) {
-		this.uid = uid;
-	}
 	
 }

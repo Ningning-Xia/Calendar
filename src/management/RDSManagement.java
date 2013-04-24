@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+
 
 public class RDSManagement {
 
@@ -13,13 +15,16 @@ public class RDSManagement {
 	public static Statement st;
 
 	public RDSManagement() {
-
 	}
 
 	public static void main(String[] args) {
 		System.out.println("Test");
-		addEvent(4, "test4_Event", "04-13-2013 9:00 ", "04-13-2013 10:00 ", "Columbia University" , 
-				"Description", null, null, 1);
+		ArrayList<String> emailList = new ArrayList<String>();
+		emailList.add("test1@gmail.com");
+		emailList.add("test9@gmail.com");
+		
+		findUidByEmail(emailList);
+				
 	}
 
 	public static Connection getConnection() {
@@ -83,6 +88,40 @@ public class RDSManagement {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public static ArrayList<Integer> findUidByEmail(ArrayList<String> emailList) {
+		ArrayList<Integer> uidList = new ArrayList<Integer>();
+		try {
+			conn = getConnection();
+			st = (Statement) conn.createStatement();
+			
+			for (String email : emailList) {
+				String sql = "select uid from User where email = '" + email + "';";
+				ResultSet rs = st.executeQuery(sql);
+				int uid;
+				if (rs.next()) {
+					uid = Integer.parseInt(rs.getString("uid"));
+					uidList.add(uid);
+					System.out.println("User: id " + uid);
+				} else {
+					System.out.println("User: " + email + " is not in our system");
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				st.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return uidList;
 	}
 
 }
