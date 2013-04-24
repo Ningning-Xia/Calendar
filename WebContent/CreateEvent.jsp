@@ -19,7 +19,6 @@
 		calendar2 = new JsDatePick({
 			useMode:2,
 			target:"end-date",
-
 			cellColorScheme:"aqua",
 		});
 	};
