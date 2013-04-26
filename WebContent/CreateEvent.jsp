@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+	<%@ page import = "model.Event" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ include file="calendarCommon.jsp" %>
 
@@ -75,22 +76,58 @@ oCalendarEn.Init();
 		<br>
 		<br>
 		<br>
+		<%
+		String action = request.getParameter("action");
+		String option = "Create";
+		String ename = "Untitled event";
+		String startTime = ""+(currentMonthInt+1)+"-"+currentDayInt+"-"+currentYearInt;
+		String endTime = ""+(currentMonthInt+1)+"-"+currentDayInt+"-"+currentYearInt;		
+		int sHour = currentHourInt;
+		int eHour = currentHourInt;
+		String[] strs = new String[2];
+		String invite = "";
+		String location = "";
+		String pic_URL = "";
+		String video_URL = "";
+		String description = "";
+		int privacy;
+		if (action != null) {
+			option = "Edit";
+			Event event = (Event) request.getAttribute("event");
+			ename = event.getEvent_name();
+			
+			strs = event.getStart_time().split(" ");
+			startTime = strs[0];
+			sHour = Integer.parseInt(strs[1].split(":")[0]);
+			
+			strs = event.getEnd_time().split(" ");
+			endTime = strs[0];
+			eHour =Integer.parseInt(strs[1].split(":")[0]);
+			
+			location = event.getLocation();
+			pic_URL = event.getPic_URL();
+			video_URL = event.getVideo_URL();
+			description  = event.getDescription();
+			privacy = event.getPrivacy();
+			invite = event.getEmailList();
+		}
+		%>
 		<table id = "create-event" >
-		<tr><td></td><td ><h1> Create a new event</h1></td></tr>
+		<tr><td></td><td ><h1> <%=option %> event</h1></td></tr>
 		<tr>
 			<th>Event Name:</th>
-			<td><input type="text" name="ename" id="ename" value="Untitled event" 
+			<td><input type="text" name="ename" id="ename" value="<%=ename %>" 
 			onfocus="if(this.value == 'Untitled event') {this.value=''}" 
-			onblur="if(this.value == ''){this.value ='Untitled event'}"/></td>
+			onblur="if(this.value == ''){this.value ='<%=ename %>'}"/></td>
 		</tr>
 		<tr>
 			<th>Start Time:  </th>
 			<td><input readonly type="text" name="start-date" id = "start-date" 
-			value="<%=currentMonthInt+1%>-<%=currentDayInt%>-<%=currentYearInt%>" />
+			value="<%=startTime %>" />
 			<select name="start-time" id = "start-time">
 			<% 
 			for (int i = 0; i < 24; i++) {
-				if (i == currentHourInt) {
+				if (i == sHour) {
 					%>
 					<option selected value="<%=i%>"><%=i%>:00</option>
 				<%} else {	%>
@@ -102,11 +139,11 @@ oCalendarEn.Init();
 		<tr>
 			<th>End Time: </th>
 			<td><input readonly type="text" name="end-date"  id = "end-date" 
-			value="<%=currentMonthInt+1%>-<%=currentDayInt%>-<%=currentYearInt%>" /> 
+			value="<%=endTime%>" /> 
 			<select name="end-time" id= "end-time">
 			<%			
 			for (int i = 0; i < 24; i++) {
-				if (i == currentHourInt) {
+				if (i == eHour) {
 					%>
 					<option selected value="<%=i%>"><%=i%>:00</option>
 				<%} else {	%>
@@ -118,24 +155,26 @@ oCalendarEn.Init();
 		</tr>
 		
 		<tr><th>Location:</th> 
-		<td><input type="text" name = "location" value="" /></td></tr>
+		<td><input type="text" name = "location" value="<%=location %>" /></td></tr>
 		
-		<tr><th>Upload Picture:</th>
-		<td><input type="file" name="picture" size="50" /></td></tr>
 		
-		<tr><th>Upload Video:</th>
-		<td><input type="file" name="video" size="50" /></td></tr>
+		<tr><th>Picture: </th>
+		<td> <%=pic_URL%> <% if (action != null) %><br> <%; %>
+		
+		 <input type="file" name="picture" size="50" /></td></tr>
+		
+		<tr><th>Video:</th>
+		<td> <%=video_URL%><% if (action != null) %><br> <%; %>
+		 <input type="file" name="video" size="50" /></td></tr>
 		
 		<tr><th>Invite Friend:</th>
-		<td>
-		<textarea name="invitelist" class = "text"
-		onfocus="if(this.value==this.defaultValue)this.value=''" 
-		onblur="if(this.value=='')this.value=this.defaultValue">(Input email addresses, separated by ';')
+		<td>(Input email addresses, separated by ;)<br>
+		<textarea name="invitelist" class = "textarea"><%=invite %>
 		</textarea></td></tr>
 		
 		<tr><th>Description:</th>
 		<td>
-		<textarea class = "text"> </textarea></td></tr>
+		<textarea class = "textarea"> </textarea></td></tr>
 		
 		<tr><th>Privacy:</th>
 		<td>

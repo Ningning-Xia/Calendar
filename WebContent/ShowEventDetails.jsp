@@ -6,9 +6,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Show Event Details</title>
+<link rel="StyleSheet" href="styles/calendar.css" type="text/css" />
 </head>
-<body>
-
+<body class = "create_event">
+<div id="main_div">
 <%
 	Event event = (Event) request.getAttribute("event");
 	String ename, createdBy, sTime, eTime, location, picture, video, description;
@@ -25,7 +26,9 @@
 	privacy = event.getPrivacy();
 	ArrayList<ArrayList<String>> userList = event.getUsers();
 %>
-
+<br>
+<br>
+<br>
 <table id = "create-event" >
 		<tr><td></td><td ><h1> Event Details</h1></td></tr>
 		<tr>
@@ -81,8 +84,7 @@
 		</td></tr>
 		
 		<tr><th>Description:</th>
-		<td>
-		<textarea class = "text"> </textarea></td></tr>
+		<td><%=description %>		</td></tr>
 		
 		<tr><th>Privacy:</th>
 		<td><%
@@ -99,5 +101,6 @@
 		<td> <p/>
 		
 			</table>
+			</div>
 </body>
 </html>

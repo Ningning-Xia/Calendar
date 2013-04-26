@@ -13,6 +13,8 @@ public class Event {
 	String pic_URL;
 	String video_URL;
 	String description;
+	String emailList;
+	
 	int privacy;
 	ArrayList<ArrayList<String>> users;
 	
@@ -99,6 +101,12 @@ public class Event {
 	}
 	public void setUsers(ArrayList<ArrayList<String>> users) {
 		this.users = users;
+	}
+	public String getEmailList() {
+		return emailList;
+	}
+	public void setEmailList(String emailList) {
+		this.emailList = emailList;
 	}
 
 	

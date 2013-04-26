@@ -49,4 +49,24 @@
     <servlet-name>ShowEventDetails</servlet-name>
     <url-pattern>/ShowEventDetails</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DeleteEventServlet</display-name>
+    <servlet-name>DeleteEventServlet</servlet-name>
+    <servlet-class>servlet.DeleteEventServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteEventServlet</servlet-name>
+    <url-pattern>/DeleteEventServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>EditEventServlet</display-name>
+    <servlet-name>EditEventServlet</servlet-name>
+    <servlet-class>servlet.EditEventServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EditEventServlet</servlet-name>
+    <url-pattern>/EditEventServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

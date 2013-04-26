@@ -33,10 +33,14 @@ public class RDSManagement {
 //		addInvitation(1, emailList);		
 
 		//ArrayList<Event> eventList = new ArrayList<Event>();
-		Event event = getEventByName("test2_Event");
+		Event event = getEventByName("test2_Event", 1);
 		
 
-		getInvitationByUid(1);
+		//getInvitationByUid(1);
+		//deleteEventById(1);
+		//updateEvent(1, 2, "event_name", "start_time",	"end_time", "location", "pic_URL", "video_URL",	"description", 1);
+		//updateEmailList(1,"ashleeai@126.com;ta2355@columbia.edu");
+		
 	}
 
 	public static Connection getConnection() {
@@ -107,7 +111,7 @@ public class RDSManagement {
 		return newEid;
 		
 	}
-
+	
 	public static ArrayList<Event> getEventsByTime(int uid) {
 		conn = getConnection();
 		ArrayList<Event> eventList = new ArrayList<Event>();
@@ -322,14 +326,14 @@ public class RDSManagement {
 	
 	
 	
-	public static Event getEventByName(String ename) {
+	public static Event getEventByName(String ename, int mode) {
+		// mode 0 for show details (need username & action)
+		// mode 1 for edit event (need email list)
 		conn = getConnection();
 		Event event = null;
 		try {
 			ArrayList<ArrayList<String>> uidList = new ArrayList<ArrayList<String>>();
-			for (int i = 0; i < 4; i++){
-				uidList.add(new ArrayList<String>());
-			}
+			
 			String sql = "select * from event where ename = '" + ename + "' ";
 			System.out.println("Select event by name  " + ename);
 
@@ -349,6 +353,11 @@ public class RDSManagement {
 				pic = rs.getString("pic");
 				privacy = Integer.parseInt(rs.getString("privacy"));
 				System.out.println("event id: "+ eid);
+				String emailList ="";
+				if (mode ==0){
+				for (int i = 0; i < 4; i++){
+					uidList.add(new ArrayList<String>());
+				}
 				sql = "select userName, action from invitation i JOIN user u on i.uid = u.uid where i.eid = "
 						+ eid;
 				st = (Statement) conn.createStatement();
@@ -359,10 +368,21 @@ public class RDSManagement {
 					uidList.get(action).add(userName);
 					System.out.println("Event id: "+eid+" user: "+userName + " action: " + action);
 				}
-
+				} else {
+					sql = "select emails from emaillist where eid = "+eid;
+					st = (Statement) conn.createStatement();
+					ResultSet rs_tmp = st.executeQuery(sql);
+					
+					while (rs_tmp.next()){
+						emailList = rs_tmp.getString("emails");
+						
+					}
+					System.out.println("Email list for event "+eid+" is "+ emailList);
+					
+				}
 				event = new Event(eid, uid, ename, startTime, endTime,
 						location, pic, video, description, privacy, uidList);
-				
+				event.setEmailList(emailList);
 				System.out.println("Event :id " + eid + " name " + ename
 						+ " start time " + startTime);
 				
@@ -386,11 +406,85 @@ public class RDSManagement {
 	}
 
 	
+	public static void deleteEventById(int eid){
+		conn = getConnection();
+		//ArrayList<Video> videoList = new ArrayList<Video>();
+		try {
+			String sql = "delete from event where eid = " + eid ;
+			System.out.println(sql);
+			st = (Statement) conn.createStatement();
+			int count = st.executeUpdate(sql);
+			System.out.println("Deleted event " + eid);
+			
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
 	
 	
+	public static void updateEvent(int eid, int uid, String event_name, String start_time,
+			String end_time, String location, String pic_URL, String video_URL,
+			String description, int privacy) {
+		
+		try {
+			conn = getConnection();
+			String sql = "UPDATE event SET uid="+uid+", ename='"+event_name+"', startTime='"
+			+start_time+"', endTime='"+ end_time+"', location='"+location+"', description='"
+			+description+"', video='"+video_URL+"', pic='"+pic_URL+"', privacy='"
+			+privacy+"' WHERE eid=" +eid;
+
+
+			System.out.println(sql);
+			st = (Statement) conn.createStatement();
+			int count = st.executeUpdate(sql);
+
+			System.out.println("Updated event " + eid);
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				st.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+	}
 	
-	
-	
+	public static void updateEmailList(int eid, String emailList) {
+		try {
+			conn = getConnection();
+			
+			st = (Statement) conn.createStatement();
+
+			String sql = "update EmailList SET emails ='" + emailList + "' where eid =" + eid;
+			
+			System.out.println(sql);
+			int count = st.executeUpdate(sql);
+
+			System.out.println("Updated emaillist of event " + eid);
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				st.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 	
 
 }

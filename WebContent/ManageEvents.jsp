@@ -23,7 +23,7 @@
 <br>
 <br>
 <div id="main_div">
-<H2> Your Event List:</H2>
+<H2><font color ="white"> Your Event List: </font> </H2>
 <table id="events">
 			<tr>
 				<th>#</th>
@@ -35,7 +35,7 @@
 			</tr>
 			<%
 				String ename, startTime, endTime;	
-				int createBy;
+				int createBy, eid;
 					ArrayList<Event> eventList = (ArrayList<Event>)request.getAttribute("eventList");
 					int size = eventList.size();
 					for (int i=0; i<size; i++) { 
@@ -43,20 +43,21 @@
 						createBy = eventList.get(i).getUid();
 						startTime = eventList.get(i).getStart_time();
 						endTime = eventList.get(i).getEnd_time();
+						eid = eventList.get(i).getEid();
 			%>
 
 			<tr>
 				<form action="ShowEventDetails" method="post">
-					<input type="hidden" name="key" value=<%=ename%> />
-					<td><input type="checkbox" name="event" id = "event" value="<%=ename%>" /></td>
+					<input type="hidden" name="key" value=<%=eid%> />
+					<td><%=i+1 %></td>
 					<td><%=ename%></td>
 					<td><%=createBy %></td>
 					<td><%=startTime%></td>
 					<td><%=endTime%></td>
 					<td><input type="submit" class = "button" value="Delete"
-						onclick="form.action='DeleteServlet';"></td>
+						onclick="alert('Are you sure you want to delete this event?'); form.action='DeleteEventServlet';"></td>
 						<td><input type="submit" class = "button" value="Edit"
-						onclick="form.action='EditEvent.jsp';"></td>
+						onclick="form.action='ShowEventDetails?action=Edit&key=<%=ename%>';"></td>
 					<td><a class="button fancybox fancybox.iframe" rel="group" href="ShowEventDetails?key=<%=ename%>">Details</a></td>
 					
 				</form>

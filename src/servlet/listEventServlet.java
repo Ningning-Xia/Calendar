@@ -42,9 +42,10 @@ public class listEventServlet extends HttpServlet {
 			
 		
 		//int uid = Integer.parseInt(request.getParameter("uid"));
+		int uid = 2;
 		ArrayList<Event> eventList = new ArrayList<Event>();
 		RDSManagement rds = new RDSManagement();
-		eventList = rds.getEventsByTime(2);
+		eventList = rds.getEventsByTime(uid);
 		request.setAttribute("eventList", eventList);
 		RequestDispatcher view = request.getRequestDispatcher("ManageEvents.jsp");
 		view.forward(request, response);
