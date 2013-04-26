@@ -13,8 +13,8 @@ import model.Event;
 public class RDSManagement {
 
 	// public static String DBurl =
-	public static String DBurl = "jdbc:mysql://mycalendar.cthu6j2tpw8v.us-east-1.rds.amazonaws.com:3306/mycalendar";
-	//public static String DBurl = "jdbc:mysql://localhost:3306/mycalendar";
+	//public static String DBurl = "jdbc:mysql://mycalendar.cthu6j2tpw8v.us-east-1.rds.amazonaws.com:3306/mycalendar";
+	public static String DBurl = "jdbc:mysql://localhost:3306/mycalendar";
 	public static Connection conn;
 	public static Statement st;
 
@@ -23,14 +23,15 @@ public class RDSManagement {
 
 	public static void main(String[] args) {
 		System.out.println("Test");
+//
+//		ArrayList<Integer> emailList = new ArrayList<Integer>();
+//		emailList.add(1);
+//		emailList.add(2);
+//
+//		addInvitation(1, emailList);		
 
-		ArrayList<Integer> emailList = new ArrayList<Integer>();
-		emailList.add(1);
-		emailList.add(2);
-
-		addInvitation(1, emailList);		
-
-
+		ArrayList<Event> eventList = new ArrayList<Event>();
+		eventList = getEventsByTime(2);
 
 	}
 
@@ -154,7 +155,6 @@ public class RDSManagement {
 			System.out.println(e.getMessage());
 
 		} finally {
-
 			try {
 				st.close();
 				conn.close();

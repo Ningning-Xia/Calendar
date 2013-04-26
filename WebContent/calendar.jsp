@@ -10,19 +10,57 @@
   <title>V-Cal</title>
   <link rel="stylesheet" href="fancybox/source/jquery.fancybox.css?v=2.1.4" type="text/css" media="screen" />
   <link rel="StyleSheet" href="styles/calendar.css" type="text/css" />
-  <script type="text/javascript" src="fancybox/lib/jquery-1.9.0.min.js"></script>
+ <!-- <link rel="StyleSheet" href="styles/bootstrap.css" type="text/css" />
+ 
+ <script type="text/javascript" src="fancybox/lib/jquery-1.9.0.min.js"></script>
 <script type="text/javascript" src="fancybox/lib/jquery.mousewheel-3.0.6.pack.js"></script>
 <script type="text/javascript" src="fancybox/source/jquery.fancybox.pack.js?v=2.1.4"></script>
-
+  -->
+  
 <script type="text/javascript">
 	$(document).ready(function() {
 		$(".fancybox").fancybox();
 	});
 </script>
 </head>
-
+<br>
+<br>
 <body>
+<jsp:include page="header.jsp"/>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="calendar.jsp">V-Cal</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active">
+                <a href="calendar.jsp">Home</a>
+              </li>
+              <li class="">
+                <a href="CreateEvent.jsp">Create Event</a>
+              </li>
+              <li class="">
+                <a href="listEventServlet">Manage Event</a>
+              </li>
+              <li class="">
+                <a href="Invitations.jsp">Invitations</a>
+              </li>
+              <li class="">
+                <a href="EmailTool.jsp">Email Tool</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
 
+
+<!--  
 <table id="bar"  >
 			<tr >
 			<th><a class="fancybox fancybox.iframe" rel="group" href="CreateEvent.jsp">Create Event</a>
@@ -32,6 +70,7 @@
 				<th><a href = "EmailTool.jsp">Email Tool</a></th>
 			</tr>			
 </table>
+-->
 <p />
 
 <div id="calendar_main_div">
