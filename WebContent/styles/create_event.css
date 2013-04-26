@@ -1,6 +1,6 @@
-body {
+body.create_event {
 	font:1em/1.4 Verdana, Arial, Helvetica, sans-serif;
-	background: url(../images/remo.jpg) top center no-repeat;
+	background: url(../images/bg1.jpg) top center no-repeat #545454;
 		padding: 30px, 30px, 30px, 30px;
 	 }
 	

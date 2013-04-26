@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
- <link rel="StyleSheet" href="./styles/create_event.css" type="text/css" />
+ <link rel="StyleSheet" href="./styles/calendar.css" type="text/css" />
  <link rel="stylesheet" type="text/css" media="all" href="./styles/jsDatePick_ltr.min.css" />
  <script type="text/javascript" src="jsDatePick.min.1.3.js"></script>
  <script language="javascript">
@@ -64,8 +64,8 @@
 <title>Create Event</title>
 </head>
 
-<body>
-
+<body class = "create_event">
+<jsp:include page="header.jsp"/>
 <script >
 var oCalendarEn=new PopupCalendar("oCalendarEn");	
 oCalendarEn.Init();

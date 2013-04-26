@@ -32,9 +32,9 @@ public class RDSManagement {
 //
 //		addInvitation(1, emailList);		
 
-		ArrayList<Event> eventList = new ArrayList<Event>();
-		eventList = getEventsByTime(2);
-
+		//ArrayList<Event> eventList = new ArrayList<Event>();
+		Event event = getEventByName("test2_Event");
+		
 
 		getInvitationByUid(1);
 	}
@@ -319,6 +319,78 @@ public class RDSManagement {
 			}
 		}
 	}
+	
+	
+	
+	public static Event getEventByName(String ename) {
+		conn = getConnection();
+		Event event = null;
+		try {
+			ArrayList<ArrayList<String>> uidList = new ArrayList<ArrayList<String>>();
+			for (int i = 0; i < 4; i++){
+				uidList.add(new ArrayList<String>());
+			}
+			String sql = "select * from event where ename = '" + ename + "' ";
+			System.out.println("Select event by name  " + ename);
 
+			st = (Statement) conn.createStatement();
+			String startTime, endTime, location, pic, video, description;
+			int eid, uid, privacy;
+			ResultSet rs = st.executeQuery(sql);
+			while (rs.next()) {
+				eid = Integer.parseInt(rs.getString("eid"));
+				uid = Integer.parseInt(rs.getString("uid"));
+				ename = rs.getString("ename");
+				startTime = rs.getString("startTime");
+				endTime = rs.getString("endTime");
+				location = rs.getString("location");
+				description = rs.getString("description");
+				video = rs.getString("video");
+				pic = rs.getString("pic");
+				privacy = Integer.parseInt(rs.getString("privacy"));
+				System.out.println("event id: "+ eid);
+				sql = "select userName, action from invitation i JOIN user u on i.uid = u.uid where i.eid = "
+						+ eid;
+				st = (Statement) conn.createStatement();
+				ResultSet rs_tmp = st.executeQuery(sql);
+				while (rs_tmp.next()) {
+					String userName = rs_tmp.getString("userName");
+					int action = Integer.parseInt(rs_tmp.getString("action"));
+					uidList.get(action).add(userName);
+					System.out.println("Event id: "+eid+" user: "+userName + " action: " + action);
+				}
+
+				event = new Event(eid, uid, ename, startTime, endTime,
+						location, pic, video, description, privacy, uidList);
+				
+				System.out.println("Event :id " + eid + " name " + ename
+						+ " start time " + startTime);
+				
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+
+		} finally {
+			try {
+				st.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return event;
+	}
+
+	
+	
+	
+	
+	
+	
+	
 
 }

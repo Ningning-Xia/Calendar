@@ -39,4 +39,14 @@
     <servlet-name>listInvitationServlet</servlet-name>
     <url-pattern>/listInvitationServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ShowEventDetails</display-name>
+    <servlet-name>ShowEventDetails</servlet-name>
+    <servlet-class>servlet.ShowEventDetails</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ShowEventDetails</servlet-name>
+    <url-pattern>/ShowEventDetails</url-pattern>
+  </servlet-mapping>
 </web-app>
