@@ -29,4 +29,14 @@
     <servlet-name>listEventServlet</servlet-name>
     <url-pattern>/listEventServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>listInvitationServlet</display-name>
+    <servlet-name>listInvitationServlet</servlet-name>
+    <servlet-class>servlet.listInvitationServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>listInvitationServlet</servlet-name>
+    <url-pattern>/listInvitationServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

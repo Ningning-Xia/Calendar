@@ -63,10 +63,12 @@
 <!--  
 <table id="bar"  >
 			<tr >
+
 			<th><a class="fancybox fancybox.iframe" rel="group" href="CreateEvent.jsp">Create Event</a>
 				<a href = "CreateEvent.jsp">Create Event</a></th>
 				<th><a href = "listEventServlet">Manage Events</a></th>
 				<th><a href = "Invitations.jsp">Invitations</a></th>
+
 				<th><a href = "EmailTool.jsp">Email Tool</a></th>
 			</tr>			
 </table>
