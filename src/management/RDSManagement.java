@@ -32,9 +32,10 @@ public class RDSManagement {
 //
 //		addInvitation(1, emailList);		
 
-		//ArrayList<Event> eventList = new ArrayList<Event>();
-		Event event = getEventByName("test2_Event", 1);
-		
+		ArrayList<Event> eventList = new ArrayList<Event>();
+		//Event event = getEventByName("test2_Event", 1);
+		eventList= getEventsByTime(1);
+		System.out.println("You have "+eventList.size()+" events");
 
 		//getInvitationByUid(1);
 		//deleteEventById(1);

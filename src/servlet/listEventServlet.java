@@ -42,7 +42,7 @@ public class listEventServlet extends HttpServlet {
 			
 		
 		//int uid = Integer.parseInt(request.getParameter("uid"));
-		int uid = 2;
+		int uid = 1;
 		ArrayList<Event> eventList = new ArrayList<Event>();
 		RDSManagement rds = new RDSManagement();
 		eventList = rds.getEventsByTime(uid);

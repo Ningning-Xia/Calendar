@@ -24,7 +24,7 @@
 <br>
 <div id="main_div">
 <H2><font color ="white"> Your Event List: </font> </H2>
-<table id="events">
+<table class ="table table-hover" id="events" >
 			<tr>
 				<th>#</th>
 				<th>Event Name</th>
