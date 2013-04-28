@@ -1,0 +1,23 @@
+body {
+	font:1em/1.4 Verdana, Arial, Helvetica, sans-serif;
+	background: url(../images/friends.jpg) top center no-repeat;
+		padding: 30px, 30px, 30px, 30px;
+}
+
+#friends{
+	
+}
+
+#search{
+	position:absolute;
+	left:500px;
+	top:150px;
+}
+
+#search input[type = "checkbox"]{
+	display:inline-block;
+	width:19px;
+	height:19px;
+	vertical-align:middle;
+	margin:-1px 4px 0 0;
+}
