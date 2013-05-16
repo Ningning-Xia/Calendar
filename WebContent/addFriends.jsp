@@ -27,13 +27,13 @@
 Name:<%= userinfo.get(0).get(0) %>
 <br>
 Email:<%= userinfo.get(0).get(1) %>
-<input type = "checkbox" name = "friend" value = <%=userinfo.get(0).get(0) %>>
+
 <form action = "addFriend" method = "post">
+<input type = "checkbox" name = "friend" value = <%=userinfo.get(0).get(0) %>>
+
 <input type = "submit" value = "Add Friend">
 </form>
 <% } %>
-
-
 </div>
 
 <div id = "requests">
