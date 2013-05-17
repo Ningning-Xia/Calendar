@@ -1,4 +1,4 @@
-<%@ page import="com.devdaily.calendar.Month, java.util.*,java.io.*,java.sql.*" %>
+<%@ page import="com.devdaily.calendar.Month, java.util.*,java.io.*,java.sql.*, model.User" %>
 <%-- TODO: CLEAN UP THE PAGE TAG ABOVE --%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -10,18 +10,19 @@
   <title>V-Cal</title>
   <link rel="stylesheet" href="fancybox/source/jquery.fancybox.css?v=2.1.4" type="text/css" media="screen" />
   <link rel="StyleSheet" href="styles/calendar.css" type="text/css" />
- <!-- <link rel="StyleSheet" href="styles/bootstrap.css" type="text/css" />
+  <!--  <link rel="StyleSheet" href="styles/bootstrap.css" type="text/css" /> -->
  
  <script type="text/javascript" src="fancybox/lib/jquery-1.9.0.min.js"></script>
 <script type="text/javascript" src="fancybox/lib/jquery.mousewheel-3.0.6.pack.js"></script>
 <script type="text/javascript" src="fancybox/source/jquery.fancybox.pack.js?v=2.1.4"></script>
-  -->
+  
   
 <script type="text/javascript">
 	$(document).ready(function() {
 		$(".fancybox").fancybox();
 	});
 </script>
+    
 </head>
 <br>
 <br>

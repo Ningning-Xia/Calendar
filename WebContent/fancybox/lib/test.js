@@ -1,5 +1,5 @@
 (function (e, t) {
-    "use strict";
+    //"use strict";
 
     function n(e) {
         var t = e.length,

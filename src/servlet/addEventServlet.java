@@ -54,7 +54,7 @@ public class addEventServlet extends HttpServlet {
 		
 		String start = start_date + " " + start_time + ":00";
 		String end = end_date + " " +end_time + ":00";
-		int uid = 1;
+		int uid = Integer.parseInt(request.getParameter("uid"));
 		
 		RDSManagement rds = new RDSManagement();
 		int eid = rds.addEvent(uid, event_name, start, end, location, pic_URL, video_URL, description, privacy);
@@ -70,7 +70,7 @@ public class addEventServlet extends HttpServlet {
 			ArrayList<Integer> userList = rds.findUidByEmail(invited_list);
 			rds.addInvitation(eid, userList);
 		}
-		
+		request.setAttribute("uid", uid);
 		RequestDispatcher view = request.getRequestDispatcher("/listEventServlet");
 		view.forward(request, response);
 		

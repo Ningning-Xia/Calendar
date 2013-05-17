@@ -11,6 +11,7 @@
 <script type="text/javascript" src="fancybox/lib/jquery.mousewheel-3.0.6.pack.js"></script>
 <link rel="stylesheet" href="fancybox/source/jquery.fancybox.css?v=2.1.4" type="text/css" media="screen" />
 <script type="text/javascript" src="fancybox/source/jquery.fancybox.pack.js?v=2.1.4"></script>
+  <!--  <link rel="StyleSheet" href="styles/bootstrap.css" type="text/css" /> -->
   <link rel="StyleSheet" href="styles/calendar.css" type="text/css" />
 <script type="text/javascript">
 	$(document).ready(function() {

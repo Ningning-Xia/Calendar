@@ -13,7 +13,7 @@ import model.Invitation;
 
 public class RDSManagement {
 
-	// public static String DBurl =
+	//public static String DBurl =
 	//public static String DBurl = "jdbc:mysql://mycalendar.cthu6j2tpw8v.us-east-1.rds.amazonaws.com:3306/mycalendar";
 	public static String DBurl = "jdbc:mysql://localhost:3306/mycalendar";
 	public static Connection conn;
@@ -25,12 +25,6 @@ public class RDSManagement {
 	public static void main(String[] args) {
 
 		System.out.println("Test");
-//
-//		ArrayList<Integer> emailList = new ArrayList<Integer>();
-//		emailList.add(1);
-//		emailList.add(2);
-//
-//		addInvitation(1, emailList);		
 
 		ArrayList<Event> eventList = new ArrayList<Event>();
 		//Event event = getEventByName("test2_Event", 1);
@@ -49,7 +43,7 @@ public class RDSManagement {
 			Class.forName("com.mysql.jdbc.Driver");
 			String url = DBurl;
 			//conn = DriverManager.getConnection(url, "admin", "12345678");
-			conn = DriverManager.getConnection(url, "root", "12345678");
+			conn = DriverManager.getConnection(url, "root", "123456");
 			if (conn != null) {
 				System.out.println("get datasource succeed!");
 			}
