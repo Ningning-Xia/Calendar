@@ -55,6 +55,12 @@
                <li class=""><% }%>
                 <a href="EmailTool.jsp">Email Tool</a>
               </li>
+              <% if(path.equals("/addFriends.jsp")) {%>
+              <li class="active">
+              <% } else {%>
+               <li class=""><% }%>
+                <a href="addFriends.jsp">Friends</a>
+              </li>
 	     <% if(path.equals("/Userhome.jsp")) {%>
               <li class="active">
               <% } else {%>
