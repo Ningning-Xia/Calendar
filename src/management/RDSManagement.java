@@ -8,6 +8,8 @@ import java.sql.Statement;
 
 import java.util.ArrayList;
 
+import com.mysql.jdbc.PreparedStatement;
+
 import model.Event;
 import model.Invitation;
 
@@ -15,7 +17,8 @@ public class RDSManagement {
 
 	//public static String DBurl =
 	//public static String DBurl = "jdbc:mysql://mycalendar.cthu6j2tpw8v.us-east-1.rds.amazonaws.com:3306/mycalendar";
-	public static String DBurl = "jdbc:mysql://localhost:3306/mycalendar";
+	//public static String DBurl = "jdbc:mysql://localhost:3306/video";
+	public static String DBurl = "jdbc:mysql://judyjava.ccbbwwkvrqk2.us-east-1.rds.amazonaws.com:3306/video";
 	public static Connection conn;
 	public static Statement st;
 
@@ -27,15 +30,10 @@ public class RDSManagement {
 		System.out.println("Test");
 
 		ArrayList<Event> eventList = new ArrayList<Event>();
-		//Event event = getEventByName("test2_Event", 1);
-		eventList= getEventsByTime(1);
-		System.out.println("You have "+eventList.size()+" events");
+		eventList = getEventsByTime(2);
 
-		//getInvitationByUid(1);
-		//deleteEventById(1);
-		//updateEvent(1, 2, "event_name", "start_time",	"end_time", "location", "pic_URL", "video_URL",	"description", 1);
-		//updateEmailList(1,"ashleeai@126.com;ta2355@columbia.edu");
-		
+
+		getInvitationByUid(1);
 	}
 
 	public static Connection getConnection() {
@@ -43,7 +41,11 @@ public class RDSManagement {
 			Class.forName("com.mysql.jdbc.Driver");
 			String url = DBurl;
 			//conn = DriverManager.getConnection(url, "admin", "12345678");
+<<<<<<< HEAD
 			conn = DriverManager.getConnection(url, "root", "123456");
+=======
+			conn = DriverManager.getConnection(url, "judy", "jj890521");
+>>>>>>> d3ca9bc1cf94e1cb6697ae90f9906cef38d2c602
 			if (conn != null) {
 				System.out.println("get datasource succeed!");
 			}
@@ -106,7 +108,7 @@ public class RDSManagement {
 		return newEid;
 		
 	}
-	
+
 	public static ArrayList<Event> getEventsByTime(int uid) {
 		conn = getConnection();
 		ArrayList<Event> eventList = new ArrayList<Event>();
@@ -134,7 +136,7 @@ public class RDSManagement {
 				video = rs.getString("video");
 				pic = rs.getString("pic");
 				privacy = Integer.parseInt(rs.getString("privacy"));
-				System.out.println("event id: "+ eid);
+				//System.out.println("event id: "+ eid);
 				sql = "select userName, action from invitation i JOIN user u on i.uid = u.uid where i.eid = "
 						+ eid;
 				st = (Statement) conn.createStatement();
@@ -143,14 +145,14 @@ public class RDSManagement {
 					String userName = rs_tmp.getString("userName");
 					int action = Integer.parseInt(rs_tmp.getString("action"));
 					uidList.get(action).add(userName);
-					System.out.println("Event id: "+eid+" user: "+userName + " action: " + action);
+					//System.out.println("Event id: "+eid+" user: "+userName + " action: " + action);
 				}
 
 				Event event = new Event(eid, uid, ename, startTime, endTime,
 						location, pic, video, description, privacy, uidList);
 				eventList.add(event);
-				System.out.println("Event :id " + eid + " name " + ename
-						+ " start time " + startTime);
+				/*System.out.println("Event :id " + eid + " name " + ename
+						+ " start time " + startTime);*/
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
@@ -319,167 +321,204 @@ public class RDSManagement {
 		}
 	}
 	
-	
-	
-	public static Event getEventByName(String ename, int mode) {
-		// mode 0 for show details (need username & action)
-		// mode 1 for edit event (need email list)
-		conn = getConnection();
-		Event event = null;
-		try {
-			ArrayList<ArrayList<String>> uidList = new ArrayList<ArrayList<String>>();
-			
-			String sql = "select * from event where ename = '" + ename + "' ";
-			System.out.println("Select event by name  " + ename);
-
+	public ArrayList<ArrayList<String>> searchByUname(String username) throws SQLException{
+		ArrayList<ArrayList<String>> userinfo = null;
+		ResultSet res = null;
+		try{
+			conn = getConnection();
+			userinfo = new ArrayList<ArrayList<String>>();
+			ArrayList<String> record = null; 
+			String sql = "select email from user where userName = '"+username+"'";
+			System.out.println(sql);
 			st = (Statement) conn.createStatement();
-			String startTime, endTime, location, pic, video, description;
-			int eid, uid, privacy;
-			ResultSet rs = st.executeQuery(sql);
-			while (rs.next()) {
-				eid = Integer.parseInt(rs.getString("eid"));
-				uid = Integer.parseInt(rs.getString("uid"));
-				ename = rs.getString("ename");
-				startTime = rs.getString("startTime");
-				endTime = rs.getString("endTime");
-				location = rs.getString("location");
-				description = rs.getString("description");
-				video = rs.getString("video");
-				pic = rs.getString("pic");
-				privacy = Integer.parseInt(rs.getString("privacy"));
-				System.out.println("event id: "+ eid);
-				String emailList ="";
-				if (mode ==0){
-				for (int i = 0; i < 4; i++){
-					uidList.add(new ArrayList<String>());
-				}
-				sql = "select userName, action from invitation i JOIN user u on i.uid = u.uid where i.eid = "
-						+ eid;
-				st = (Statement) conn.createStatement();
-				ResultSet rs_tmp = st.executeQuery(sql);
-				while (rs_tmp.next()) {
-					String userName = rs_tmp.getString("userName");
-					int action = Integer.parseInt(rs_tmp.getString("action"));
-					uidList.get(action).add(userName);
-					System.out.println("Event id: "+eid+" user: "+userName + " action: " + action);
-				}
-				} else {
-					sql = "select emails from emaillist where eid = "+eid;
-					st = (Statement) conn.createStatement();
-					ResultSet rs_tmp = st.executeQuery(sql);
-					
-					while (rs_tmp.next()){
-						emailList = rs_tmp.getString("emails");
-						
-					}
-					System.out.println("Email list for event "+eid+" is "+ emailList);
-					
-				}
-				event = new Event(eid, uid, ename, startTime, endTime,
-						location, pic, video, description, privacy, uidList);
-				event.setEmailList(emailList);
-				System.out.println("Event :id " + eid + " name " + ename
-						+ " start time " + startTime);
-				
+			//pre.setString(1, username);
+			res = st.executeQuery(sql);
+			while(res.next()){
+				record = new ArrayList<String>();
+				String emailaddr = res.getString("email");
+				record.add(username);
+				record.add(emailaddr);
+				userinfo.add(record);
 			}
-		} catch (SQLException e) {
+			
+		}catch (Exception e){
 			System.out.println(e.getMessage());
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-
-		} finally {
-			try {
+		}finally {
+			try{
 				st.close();
 				conn.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+			}catch (SQLException e){
 				e.printStackTrace();
 			}
 		}
-
-		return event;
+		return userinfo;
 	}
-
 	
-	public static void deleteEventById(int eid){
-		conn = getConnection();
-		//ArrayList<Video> videoList = new ArrayList<Video>();
-		try {
-			String sql = "delete from event where eid = " + eid ;
-			System.out.println(sql);
-			st = (Statement) conn.createStatement();
-			int count = st.executeUpdate(sql);
-			System.out.println("Deleted event " + eid);
+	public int getUidByName(String uname) throws SQLException{
+		int uid = -1;
+		try{
+			 conn = getConnection();
+			 String sql = "select uid from user where userName = '"+uname+"'";
+			 st = (Statement)conn.createStatement();
+			 ResultSet res = st.executeQuery(sql);
+			 while(res.next())
+				 uid = res.getInt("uid");
+			 
+		}catch (Exception e){
+			System.out.println(e.getMessage());
+		}/*finally {
+			st.close();
+			conn.close();
+		}*/
+		return uid;
+	}
+	
+	
+	/*public void sendFriendRequest(String sendname, String friendname) throws SQLException{
+		try{
+			conn = getConnection();
+			int sendid = getUidByName(sendname);
+			int friendid = getUidByName(friendname);
+			if((sendid != -1) && (friendid != -1)){
+				int status = 1;
+				String sql = "update friend set status = "+ status + " where uid1 = " + sendid + 
+						     " and uid2 = " + friendid;
+				st = (Statement)conn.createStatement();
+				st.executeUpdate(sql);
+			}
 			
-		} catch (SQLException e) {
+		}catch (Exception e){
 			System.out.println(e.getMessage());
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+		}finally {
+			st.close();
+			conn.close();
 		}
-	}
+	}*/
 	
-	
-	public static void updateEvent(int eid, int uid, String event_name, String start_time,
-			String end_time, String location, String pic_URL, String video_URL,
-			String description, int privacy) {
+	public boolean sendFriendRequest(String sendName,String receiveName) throws SQLException{
+		System.out.println("Here");
+		int sendid, friendid;
+		String sql1, sql2,sql3;
+		int status = 1;
+		ResultSet res = null;
 		
-		try {
+		try{
 			conn = getConnection();
-			String sql = "UPDATE event SET uid="+uid+", ename='"+event_name+"', startTime='"
-			+start_time+"', endTime='"+ end_time+"', location='"+location+"', description='"
-			+description+"', video='"+video_URL+"', pic='"+pic_URL+"', privacy='"
-			+privacy+"' WHERE eid=" +eid;
-
-
-			System.out.println(sql);
-			st = (Statement) conn.createStatement();
-			int count = st.executeUpdate(sql);
-
-			System.out.println("Updated event " + eid);
-
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		} finally {
-			try {
-				st.close();
-				conn.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			sendid = getUidByName(sendName);
+			friendid = getUidByName(receiveName);
+			sql1 = "select * from friend where uid1 = " + sendid + " and uid2 = " + friendid;
+			System.out.println(sql1);
+			st = (Statement)conn.createStatement();
+			res = st.executeQuery(sql1);
+			if(res.next()){
+				sql2 = "update friend set states = " + status + " where uid1 = " + sendid + 
+						" and uid2 = " + friendid;
+				st = (Statement)conn.createStatement();
+				System.out.println(sql2);
+				st.executeUpdate(sql2);
 			}
+			res = null;
+			int count = 0;
+			sql3 = "select count(*) from friend";
+			st = (Statement)conn.createStatement();
+			res = st.executeQuery(sql3);
+			if(res.next())
+				count = res.getInt(1);
+			System.out.println(count);
+			count = count + 1;
+			
+			//res = null;
+			sql3 = "insert into friend value(" + count + "," + sendid + "," 
+				 + friendid + "," + status + ")";
+			st = (Statement)conn.createStatement();
+			st.executeUpdate(sql3);
+			
+		}catch (Exception e){
+			System.out.println(e.getMessage());
+		}finally{
+			st.close();
+			conn.close();
 		}
-
+		return true;
 	}
 	
-	public static void updateEmailList(int eid, String emailList) {
-		try {
-			conn = getConnection();
-			
-			st = (Statement) conn.createStatement();
-
-			String sql = "update EmailList SET emails ='" + emailList + "' where eid =" + eid;
-			
-			System.out.println(sql);
-			int count = st.executeUpdate(sql);
-
-			System.out.println("Updated emaillist of event " + eid);
-
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		} finally {
-			try {
-				st.close();
-				conn.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+	
+	
+	public void getFriendList(ArrayList<Integer> fid, ArrayList<String> fname,String username,
+		                      int status) throws SQLException{
+		try{
+			ResultSet res = null;
+			int userid = getUidByName(username);
+			String sql = "select friend.uid2, user.userName" +
+			             " from user,friend where friend.uid1 = " + userid +
+			             " and friend.states = " + status + 
+			             " and friend.uid2 = user.uid";
+			st = (Statement)conn.createStatement();
+			res = st.executeQuery(sql);
+			while(res.next()){
+				int currentid = res.getInt("uid2");
+				String currentName = res.getString("userName");
+				fid.add(currentid);
+				fname.add(currentName);
 			}
+		}catch (Exception e){
+			System.out.println(e.getMessage());
+		}finally{
+			st.close();
+			conn.close();
 		}
 	}
 	
-
+	public boolean DeleteFriends(String userName, String deleteName) throws SQLException{
+		int userId = getUidByName(userName);
+		int friendId = getUidByName(deleteName);
+		int result = 0;
+		try{
+			conn = getConnection();
+			String sql = "delete from friend where uid1 = " + userId +
+					     " and uid2 = " + friendId;
+			st = (Statement)conn.createStatement();
+			result = st.executeUpdate(sql);
+			if(result == 0)
+				return false;
+		}catch (Exception e){
+			System.out.println(e.getMessage());
+		}finally{
+			st.close();
+			conn.close();
+		}
+		return true;
+	}
+	
+	public void acceptRequest(String sendName,String receiveName) throws SQLException{
+		//System.out.println("Here");
+		int sendid, friendid;
+		String sql1, sql2,sql3;
+		int status = 2;
+		ResultSet res = null;
+		
+		try{
+			conn = getConnection();
+			sendid = getUidByName(sendName);
+			friendid = getUidByName(receiveName);
+			sql1 = "select * from friend where uid1 = " + sendid + " and uid2 = " + friendid;
+			System.out.println(sql1);
+			st = (Statement)conn.createStatement();
+			res = st.executeQuery(sql1);
+			if(res.next()){
+				sql2 = "update friend set states = " + status + " where uid1 = " + sendid + 
+						" and uid2 = " + friendid;
+				st = (Statement)conn.createStatement();
+				System.out.println(sql2);
+				st.executeUpdate(sql2);
+			}
+			
+		}catch (Exception e){
+			System.out.println(e.getMessage());
+		}finally{
+			st.close();
+			conn.close();
+		}
+	}
+	
 }

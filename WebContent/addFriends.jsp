@@ -10,7 +10,27 @@
 </head>
 <body>
 <div id = "friends">
-
+<% ArrayList<Integer> friendListId = new ArrayList<Integer>();
+   ArrayList<String> friendListName = new ArrayList<String>();
+   boolean isDeletedFriend;
+   %>
+<form action = "ListFriends" method = "post">
+<input type = "submit" name = "friends" value = "Friends">
+</form>
+<% friendListId = (ArrayList<Integer>)request.getAttribute("friendsid");
+   friendListName = (ArrayList<String>)request.getAttribute("friendsName");
+  /* if(friendListName != null)
+	   out.println(friendListName.get(0));*/
+   %>
+<form action = "DeleteFriends" method = "post">
+<% if(friendListName != null ){
+for(int i = 0; i < friendListName.size(); i++){%>
+Name: <%= friendListName.get(i) %>
+<input type = "checkbox" name = "friend" value = <%=friendListName.get(i) %>>
+<br>
+<%}%>
+<input type = "submit" value = "Delete"><%}%>
+</form>
 </div>
 
 
@@ -27,17 +47,33 @@
 Name:<%= userinfo.get(0).get(0) %>
 <br>
 Email:<%= userinfo.get(0).get(1) %>
-<input type = "checkbox" name = "friend" value = <%=userinfo.get(0).get(0) %>>
+
 <form action = "addFriend" method = "post">
+<input type = "checkbox" name = "friend" value = <%=userinfo.get(0).get(0) %>>
 <input type = "submit" value = "Add Friend">
 </form>
 <% } %>
-
-
 </div>
 
 <div id = "requests">
-
+<% ArrayList<Integer> requestsId = new ArrayList<Integer>();
+   ArrayList<String> requestsName = new ArrayList<String>();
+   %>
+<form action = "friendRequests" method = "post">
+<input type = "submit" value = "Friend Request">
+</form>
+<% requestsId = (ArrayList<Integer>)request.getAttribute("requestsId");
+   requestsName = (ArrayList<String>)request.getAttribute("reuqestsName");
+   %>
+<form action = "AcceptRequest" method = "post">
+<% if(requestsName != null && requestsName.size() != 0){
+for(int i = 0; i < requestsName.size(); i++){%>
+Name: <%= requestsName.get(i) %>
+<input type = "checkbox" name = "friend" value = <%=requestsName.get(i) %>>
+<br>
+<%}%>
+<input type = "submit" value = "Accept"><%}%>
+</form>
 </div>
 
 </body>
