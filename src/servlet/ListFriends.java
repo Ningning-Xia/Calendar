@@ -1,25 +1,26 @@
 package servlet;
 
-import management.RDSManagement;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import management.RDSManagement;
 
 /**
- * Servlet implementation class addFriend
+ * Servlet implementation class ListFriends
  */
-public class addFriend extends HttpServlet {
+public class ListFriends extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public RDSManagement rds;
-       
+    public RDSManagement rds;
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public addFriend() {
+    public ListFriends() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,18 +37,23 @@ public class addFriend extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String friendrequest = request.getParameter("friend");
-		//System.out.println(friendrequest);
-		String ownname = "test1";
-		//int status = 1;
-		boolean requestStatus = false;
+		String username = "test1";
 		rds = new RDSManagement();
+		//int userid = 1;
+		ArrayList<Integer> friendsId = new ArrayList<Integer>();
+		ArrayList<String> friendsName = new ArrayList<String>();
+		int status = 2;
 		try {
-			requestStatus = rds.sendFriendRequest(ownname, friendrequest);
+			rds.getFriendList(friendsId, friendsName, username,status);
+			System.out.println(friendsId.get(0));
+			System.out.println(friendsName.get(1));
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}	
+		}
+		request.setAttribute("friendsid", friendsId);
+		request.setAttribute("friendsName", friendsName);
+		RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/addFriends.jsp");
+		requestDispatcher.forward(request, response);
 	}
 
 }

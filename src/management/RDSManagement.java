@@ -368,10 +368,10 @@ public class RDSManagement {
 			 
 		}catch (Exception e){
 			System.out.println(e.getMessage());
-		}finally {
+		}/*finally {
 			st.close();
 			conn.close();
-		}
+		}*/
 		return uid;
 	}
 	
@@ -397,31 +397,130 @@ public class RDSManagement {
 		}
 	}*/
 	
-	public boolean sendFriendRequest(String sendName,String receiveName){
+	public boolean sendFriendRequest(String sendName,String receiveName) throws SQLException{
+		System.out.println("Here");
 		int sendid, friendid;
-		String sql1, sql2;
+		String sql1, sql2,sql3;
 		int status = 1;
+		ResultSet res = null;
 		
 		try{
 			conn = getConnection();
-			ResultSet res = null;
 			sendid = getUidByName(sendName);
 			friendid = getUidByName(receiveName);
-			sql1 = "select * from friend where uid1 = " + sendid + "and uid2 = " + friendid;
+			sql1 = "select * from friend where uid1 = " + sendid + " and uid2 = " + friendid;
+			System.out.println(sql1);
 			st = (Statement)conn.createStatement();
 			res = st.executeQuery(sql1);
-			if(res != null){
-				sql2 = "update friend set status = " + status + "where uid1 = " + sendid + "and uid2 = " +
-			            friendid;
+			if(res.next()){
+				sql2 = "update friend set states = " + status + " where uid1 = " + sendid + 
+						" and uid2 = " + friendid;
+				st = (Statement)conn.createStatement();
+				System.out.println(sql2);
+				st.executeUpdate(sql2);
+			}
+			res = null;
+			int count = 0;
+			sql3 = "select count(*) from friend";
+			st = (Statement)conn.createStatement();
+			res = st.executeQuery(sql3);
+			if(res.next())
+				count = res.getInt(1);
+			System.out.println(count);
+			count = count + 1;
+			
+			//res = null;
+			sql3 = "insert into friend value(" + count + "," + sendid + "," 
+				 + friendid + "," + status + ")";
+			st = (Statement)conn.createStatement();
+			st.executeUpdate(sql3);
+			
+		}catch (Exception e){
+			System.out.println(e.getMessage());
+		}finally{
+			st.close();
+			conn.close();
+		}
+		return true;
+	}
+	
+	
+	
+	public void getFriendList(ArrayList<Integer> fid, ArrayList<String> fname,String username,
+		                      int status) throws SQLException{
+		try{
+			ResultSet res = null;
+			int userid = getUidByName(username);
+			String sql = "select friend.uid2, user.userName" +
+			             " from user,friend where friend.uid1 = " + userid +
+			             " and friend.states = " + status + 
+			             " and friend.uid2 = user.uid";
+			st = (Statement)conn.createStatement();
+			res = st.executeQuery(sql);
+			while(res.next()){
+				int currentid = res.getInt("uid2");
+				String currentName = res.getString("userName");
+				fid.add(currentid);
+				fname.add(currentName);
+			}
+		}catch (Exception e){
+			System.out.println(e.getMessage());
+		}finally{
+			st.close();
+			conn.close();
+		}
+	}
+	
+	public boolean DeleteFriends(String userName, String deleteName) throws SQLException{
+		int userId = getUidByName(userName);
+		int friendId = getUidByName(deleteName);
+		int result = 0;
+		try{
+			conn = getConnection();
+			String sql = "delete from friend where uid1 = " + userId +
+					     " and uid2 = " + friendId;
+			st = (Statement)conn.createStatement();
+			result = st.executeUpdate(sql);
+			if(result == 0)
+				return false;
+		}catch (Exception e){
+			System.out.println(e.getMessage());
+		}finally{
+			st.close();
+			conn.close();
+		}
+		return true;
+	}
+	
+	public void acceptRequest(String sendName,String receiveName) throws SQLException{
+		//System.out.println("Here");
+		int sendid, friendid;
+		String sql1, sql2,sql3;
+		int status = 2;
+		ResultSet res = null;
+		
+		try{
+			conn = getConnection();
+			sendid = getUidByName(sendName);
+			friendid = getUidByName(receiveName);
+			sql1 = "select * from friend where uid1 = " + sendid + " and uid2 = " + friendid;
+			System.out.println(sql1);
+			st = (Statement)conn.createStatement();
+			res = st.executeQuery(sql1);
+			if(res.next()){
+				sql2 = "update friend set states = " + status + " where uid1 = " + sendid + 
+						" and uid2 = " + friendid;
+				st = (Statement)conn.createStatement();
+				System.out.println(sql2);
+				st.executeUpdate(sql2);
 			}
 			
 		}catch (Exception e){
 			System.out.println(e.getMessage());
 		}finally{
-			
+			st.close();
+			conn.close();
 		}
-		return true;
 	}
-
-
+	
 }
