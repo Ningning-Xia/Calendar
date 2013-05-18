@@ -20,7 +20,6 @@
     <servlet-name>addEventServlet</servlet-name>
     <url-pattern>/addEventServlet</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>listEventServlet</display-name>
@@ -31,7 +30,6 @@
     <servlet-name>listEventServlet</servlet-name>
     <url-pattern>/listEventServlet</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>listInvitationServlet</display-name>
@@ -42,7 +40,6 @@
     <servlet-name>listInvitationServlet</servlet-name>
     <url-pattern>/listInvitationServlet</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>ShowEventDetails</display-name>
@@ -53,7 +50,6 @@
     <servlet-name>ShowEventDetails</servlet-name>
     <url-pattern>/ShowEventDetails</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>DeleteEventServlet</display-name>
@@ -64,7 +60,6 @@
     <servlet-name>DeleteEventServlet</servlet-name>
     <url-pattern>/DeleteEventServlet</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>EditEventServlet</display-name>
@@ -75,7 +70,6 @@
     <servlet-name>EditEventServlet</servlet-name>
     <url-pattern>/EditEventServlet</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>LoginServlet</display-name>
@@ -86,7 +80,6 @@
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/LoginServlet</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>EditAccountServlet</display-name>
@@ -97,7 +90,6 @@
     <servlet-name>EditAccountServlet</servlet-name>
     <url-pattern>/EditAccountServlet</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>LogoutServlet</display-name>
@@ -110,7 +102,6 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-
     <display-name>EventDetails</display-name>
     <servlet-name>EventDetails</servlet-name>
     <servlet-class>servlet.EventDetails</servlet-class>
@@ -121,7 +112,6 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-
     <display-name>SendEmails</display-name>
     <servlet-name>SendEmails</servlet-name>
     <servlet-class>servlet.SendEmails</servlet-class>
@@ -131,7 +121,6 @@
     <url-pattern>/SendEmails</url-pattern>
   </servlet-mapping>
   <servlet>
-      
     <description></description>
     <display-name>searchFriends</display-name>
     <servlet-name>searchFriends</servlet-name>
@@ -141,7 +130,6 @@
     <servlet-name>searchFriends</servlet-name>
     <url-pattern>/searchFriends</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>addFriend</display-name>
@@ -152,7 +140,6 @@
     <servlet-name>addFriend</servlet-name>
     <url-pattern>/addFriend</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>ListFriends</display-name>
@@ -163,7 +150,6 @@
     <servlet-name>ListFriends</servlet-name>
     <url-pattern>/ListFriends</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>DeleteFriends</display-name>
@@ -174,7 +160,6 @@
     <servlet-name>DeleteFriends</servlet-name>
     <url-pattern>/DeleteFriends</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>friendRequests</display-name>
@@ -185,7 +170,6 @@
     <servlet-name>friendRequests</servlet-name>
     <url-pattern>/friendRequests</url-pattern>
   </servlet-mapping>
-  
   <servlet>
     <description></description>
     <display-name>AcceptRequest</display-name>
@@ -196,7 +180,6 @@
     <servlet-name>AcceptRequest</servlet-name>
     <url-pattern>/AcceptRequest</url-pattern>
   </servlet-mapping>
-
   <servlet>
     <description></description>
     <display-name>UpdateInvitationServlet</display-name>
@@ -207,5 +190,44 @@
     <servlet-name>UpdateInvitationServlet</servlet-name>
     <url-pattern>/UpdateInvitationServlet</url-pattern>
   </servlet-mapping>
-
+  <servlet>
+    <description></description>
+    <display-name>UploadServlet</display-name>
+    <servlet-name>UploadServlet</servlet-name>
+    <servlet-class>servlet.UploadServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UploadServlet</servlet-name>
+    <url-pattern>/UploadServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UploadVideo</display-name>
+    <servlet-name>UploadVideo</servlet-name>
+    <servlet-class>servlet.UploadVideo</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UploadVideo</servlet-name>
+    <url-pattern>/UploadVideo</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ListVideoServlet</display-name>
+    <servlet-name>ListVideoServlet</servlet-name>
+    <servlet-class>servlet.ListVideoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ListVideoServlet</servlet-name>
+    <url-pattern>/ListVideoServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ViewVideoServlet</display-name>
+    <servlet-name>ViewVideoServlet</servlet-name>
+    <servlet-class>servlet.ViewVideoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ViewVideoServlet</servlet-name>
+    <url-pattern>/ViewVideoServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import table.eventTable;
+
 import management.RDSManagement;
 
 /**
@@ -57,7 +59,7 @@ public class EditEventServlet extends HttpServlet {
 		int uid = 1;
 		
 		RDSManagement rds = new RDSManagement();
-		rds.updateEvent(eid, uid, event_name, start, end, location, pic_URL, video_URL, description, privacy);
+		eventTable.updateEvent(eid, uid, event_name, start, end, location, pic_URL, video_URL, description, privacy);
 		rds.updateEmailList(eid, invitelist);
 		ArrayList<String> invited_list = new ArrayList<String>();
 		
