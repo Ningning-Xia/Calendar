@@ -16,8 +16,8 @@ import model.Invitation;
 public class RDSManagement {
 
 	//public static String DBurl = "jdbc:mysql://mycalendar.cthu6j2tpw8v.us-east-1.rds.amazonaws.com:3306/mycalendar";
-	public static String DBurl = "jdbc:mysql://localhost:3306/mycalendar";
-	//public static String DBurl = "jdbc:mysql://judyjava.ccbbwwkvrqk2.us-east-1.rds.amazonaws.com:3306/video";
+	//public static String DBurl = "jdbc:mysql://localhost:3306/mycalendar";
+	public static String DBurl = "jdbc:mysql://judyjava.ccbbwwkvrqk2.us-east-1.rds.amazonaws.com:3306/video";
 	public static Connection conn;
 	public static Statement st;
 
@@ -38,7 +38,7 @@ public class RDSManagement {
 			Class.forName("com.mysql.jdbc.Driver");
 			String url = DBurl;
 			//conn = DriverManager.getConnection(url, "judy", "jj890521");
-			conn = DriverManager.getConnection(url, "root", "123456");
+			conn = DriverManager.getConnection(url, "judy", "jj890521");
 
 			if (conn != null) {
 				System.out.println("get datasource succeed!");
@@ -377,6 +377,69 @@ public class RDSManagement {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public static ArrayList<Event> getEventsByTime(int uid) {
+		conn = getConnection();
+		ArrayList<Event> eventList = new ArrayList<Event>();
+		try {
+			ArrayList<ArrayList<String>> uidList = new ArrayList<ArrayList<String>>();
+			for (int i = 0; i < 4; i++){
+				uidList.add(new ArrayList<String>());
+			}
+			String sql = "select * from event where uid = " + uid
+					+ " order by eid DESC";
+			System.out.println("Select all events for user " + uid
+					+ " sorted by create time");
+
+			st = (Statement) conn.createStatement();
+			String ename, startTime, endTime, location, pic, video, description;
+			int eid, privacy;
+			ResultSet rs = st.executeQuery(sql);
+			while (rs.next()) {
+				eid = Integer.parseInt(rs.getString("eid"));
+				ename = rs.getString("ename");
+				startTime = rs.getString("startTime");
+				endTime = rs.getString("endTime");
+				location = rs.getString("location");
+				description = rs.getString("description");
+				video = rs.getString("video");
+				pic = rs.getString("pic");
+				privacy = Integer.parseInt(rs.getString("privacy"));
+				//System.out.println("event id: "+ eid);
+				sql = "select userName, action from invitation i JOIN User u on i.uid = u.uid where i.eid = "
+						+ eid;
+				st = (Statement) conn.createStatement();
+				ResultSet rs_tmp = st.executeQuery(sql);
+				while (rs_tmp.next()) {
+					String userName = rs_tmp.getString("userName");
+					int action = Integer.parseInt(rs_tmp.getString("action"));
+					uidList.get(action).add(userName);
+					//System.out.println("Event id: "+eid+" user: "+userName + " action: " + action);
+				}
+
+				Event event = new Event(eid, uid, ename, startTime, endTime,
+						location, pic, video, description, privacy, uidList);
+				eventList.add(event);
+				/*System.out.println("Event :id " + eid + " name " + ename
+						+ " start time " + startTime);*/
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+
+		} finally {
+			try {
+				st.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return eventList;
 	}
 	
 	

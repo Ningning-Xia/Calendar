@@ -47,8 +47,6 @@
 
 
 
-
-
 <div id = "search">
 <H2><font color ="white"> Search Your Friends: </font> </H2>
 <% ArrayList<ArrayList<String>> userinfo = new ArrayList<ArrayList<String>>(); %>
