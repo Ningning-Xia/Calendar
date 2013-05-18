@@ -35,19 +35,15 @@ public class AcceptRequest extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		String username = "test1";
 		String friendName = request.getParameter("friend");
+		String userName = request.getParameter("whoacceptfriend");
 		rds = new RDSManagement();
 		try {
-			rds.acceptRequest(username, friendName);
+			rds.acceptRequest(userName, friendName);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		//request.setAttribute("requestsId", requestsId);
-		//request.setAttribute("reuqestsName", requestsName);
 		RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/addFriends.jsp");
 		requestDispatcher.forward(request, response);
 	}

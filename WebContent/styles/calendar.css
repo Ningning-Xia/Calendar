@@ -161,6 +161,7 @@ a:hover {text-decoration: underline; color: yellow;}
 
 #search{
 	position:absolute;
+	/*position:relative;*/
 	left:400px;
 	top:150px;
 	width: 32em;
@@ -176,12 +177,14 @@ a:hover {text-decoration: underline; color: yellow;}
 
 #request{
 	position:absolute;
+	/*position:relative;*/
 	right:50px;
 	top:80px;
 }
 
 #friends{
 	position:absolute;
+	/*position:relative;*/
 	left:50px;
 	top:80px;
 }

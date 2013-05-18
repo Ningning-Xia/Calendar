@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" import = "model.User"%>
 <%@ page import = "java.util.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -10,10 +10,10 @@
 </head>
 <body>
 <jsp:include page="header.jsp"/>
-
-
-
-
+<% if(session.getAttribute("user") != null){
+	User user = (User)session.getAttribute("user");
+	String userName = user.getUserName();
+	int uid = user.getUid();%>
 
 <div id = "friends">
 <% ArrayList<Integer> friendListId = new ArrayList<Integer>();
@@ -21,6 +21,7 @@
    boolean isDeletedFriend;
    %>
 <form action = "ListFriends" method = "post">
+<input type = "hidden" name = "listfriendname" value = <%=userName %>>
 <input type = "submit" name = "friends" value = "Friends" class = "button">
 </form>
 <% friendListId = (ArrayList<Integer>)request.getAttribute("friendsid");
@@ -37,10 +38,10 @@
 </tr>
 <%}%>
 </table>
+<input type = "hidden" name = "whodeletefriend" value = <%=userName %>>
 <input type = "submit" class = "button" value = "Delete"><%}%>
 </form>
 </div>
-
 
 
 
@@ -53,8 +54,11 @@
 <input type = "text" name = "username" size = "35">
 <input type = "submit" name = "search" value = "search" class = "button">
 </form>
+
+
 <% userinfo = (ArrayList<ArrayList<String>>)request.getAttribute("userinfo");%>
 <% if(userinfo != null && userinfo.size() != 0){ %>
+<form action = "addFriend" method = "post">
 <table>
 <tr>
 <td>Name:</td>
@@ -66,7 +70,7 @@
 <td><h7><%= userinfo.get(0).get(1) %></td>
 </tr>
 </table>
-<form action = "addFriend" method = "post">
+<input type = "hidden" name = "whofindfriend" value = <%=userName %>>
 <input type = "submit" value = "Add Friend" class = "button">
 </form>
 <% } %>
@@ -84,6 +88,7 @@
    ArrayList<String> requestsName = new ArrayList<String>();
    %>
 <form action = "friendRequests" method = "post">
+<input type = "hidden" name = "whofriendrequest" value = <%=userName %>>
 <input type = "submit" value = "Friend Request" class = "button">
 </form>
 <% requestsId = (ArrayList<Integer>)request.getAttribute("requestsId");
@@ -100,9 +105,10 @@
 </tr>
 <%}%>
 </table>
+<input type = "hidden" name = "whoacceptfriend" value = <%=userName %>>
 <input type = "submit" value = "Accept" class = "button"><%}%>
 </form>
 </div>
-
+<%} %>
 </body>
 </html>

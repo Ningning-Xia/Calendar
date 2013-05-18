@@ -36,10 +36,12 @@ public class DeleteFriends extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String deleteName = request.getParameter("friend");
+		String userName = request.getParameter("whodeletefriend");
+		System.out.println(userName);
 		boolean isDeleted = false;
 		rds = new RDSManagement();
 		try {
-			isDeleted = rds.DeleteFriends("test1", deleteName);
+			isDeleted = rds.DeleteFriends(userName, deleteName);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
