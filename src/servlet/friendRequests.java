@@ -39,12 +39,13 @@ public class friendRequests extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String username = "test1";
+		String userName = request.getParameter("whofriendrequest");
 		int status = 1;
 		ArrayList<Integer> requestsId = new ArrayList<Integer>();
 		ArrayList<String> requestsName = new ArrayList<String>();
 		rds = new RDSManagement();
 		try {
-			rds.getFriendList(requestsId, requestsName, username, status);
+			rds.getFriendList(requestsId, requestsName, userName, status);
 			//System.out.println(requestsName.get(0));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

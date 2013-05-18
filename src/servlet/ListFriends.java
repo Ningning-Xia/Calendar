@@ -37,14 +37,16 @@ public class ListFriends extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String username = "test1";
+		//String username = "test1";
+		String userName = request.getParameter("listfriendname");
+		System.out.println(userName);
 		rds = new RDSManagement();
 		//int userid = 1;
 		ArrayList<Integer> friendsId = new ArrayList<Integer>();
 		ArrayList<String> friendsName = new ArrayList<String>();
 		int status = 2;
 		try {
-			rds.getFriendList(friendsId, friendsName, username,status);
+			rds.getFriendList(friendsId, friendsName, userName,status);
 			/*System.out.println(friendsId.get(0));
 			System.out.println(friendsName.get(1));*/
 		} catch (SQLException e) {

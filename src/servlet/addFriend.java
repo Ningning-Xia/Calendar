@@ -4,6 +4,7 @@ import management.RDSManagement;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -37,17 +38,20 @@ public class addFriend extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		String friendrequest = request.getParameter("friend");
-		//System.out.println(friendrequest);
 		String ownname = "test1";
-		//int status = 1;
 		boolean requestStatus = false;
+		String ownName = request.getParameter("whofindfriend");
 		rds = new RDSManagement();
+		System.out.println("Here's the friend what?");
+		System.out.println(friendrequest);
 		try {
-			requestStatus = rds.sendFriendRequest(ownname, friendrequest);
+			requestStatus = rds.sendFriendRequest(ownName, friendrequest);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}	
+		}
+		RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/addFriends.jsp");
+		requestDispatcher.forward(request, response);
 	}
 
 }
