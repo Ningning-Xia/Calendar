@@ -31,9 +31,7 @@ public class RDSManagement {
 
 		ArrayList<Event> eventList = new ArrayList<Event>();
 		eventList = getEventsByTime(2);
-
-
-		getInvitationByUid(1);
+		//getInvitationByUid(1);
 	}
 
 	public static Connection getConnection() {
@@ -376,41 +374,7 @@ public class RDSManagement {
 		}
 	}
 	
-	public static ArrayList<Invitation> getInvitationByUid(int uid) {
-		ArrayList<Invitation> invitationList = new ArrayList<Invitation>();
-		try {
-			conn = getConnection();
-			st = (Statement) conn.createStatement();
-			
-			String sql = "select i.eid, e.ename, i.uid, u.username, i.action" +
-					" from Invitation i, Event e, User u where i.uid = u.uid and" +
-					" e.eid = i.eid and u.uid = " + uid + ";";
-			System.out.println(sql);
-			ResultSet rs = st.executeQuery(sql);
-			while (rs.next()) {
-				int eid = Integer.parseInt(rs.getString("eid"));
-				String ename = rs.getString("ename");
-				String uname = rs.getString("username");
-				int action = Integer.parseInt(rs.getString("action"));
-				Invitation invitation = new Invitation(eid, ename, uid, uname, action);
-				System.out.println("eid " +eid + " uid " + uid + " action " + action);
-				invitationList.add(invitation);
-			}			
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		} finally {
-			try {
-				st.close();
-				conn.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		return invitationList;
-	}
+
 	
 	public static void addEmailList(int eid, String emailList) {
 		try {
