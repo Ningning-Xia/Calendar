@@ -8,7 +8,7 @@ public class Email {
 	
 	public Email(){};
 	
-	public Email(String toAddr, String fromAddr, String subject, String content){
+	public Email(String fromAddr, String toAddr, String subject, String content){
 		this.toAddr = toAddr;
 		this.fromAddr = fromAddr;
 		this.subject = subject;

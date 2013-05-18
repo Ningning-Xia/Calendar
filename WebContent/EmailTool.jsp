@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="ISO-8859-1" import = "model.User"%>
 <%@ page import="java.util.*" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -11,6 +11,10 @@
 </head>
 <body>
 <jsp:include page="header.jsp"/>
+<% if(session.getAttribute("user") != null){
+	User user = (User)session.getAttribute("user");
+	String userName = user.getUserName();
+	String userEmailAddress = user.getEmail();%>
 
 <% ArrayList<String> EventNames = new ArrayList<String>(); %>
 <form action = "ListEvent" method = "post">
@@ -35,8 +39,9 @@ int size = EventNames.size();%>
 
 <div id = "email">
 <H2><font color ="white"> Send Emails: </font> </H2>
+<%out.println(userEmailAddress); %>
 <form action = "SendEmails" method = "post">
-
+<input type = "hidden" name = "fromUserEmail" value = <%=userEmailAddress %>>
 <table>
 <tr>
 <td><input type = "button" value = "Send Email to" class = "button"></td>
@@ -58,6 +63,6 @@ int size = EventNames.size();%>
 </div>
 
 
-
+<%} %>
 </body>
 </html>

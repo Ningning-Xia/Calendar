@@ -36,11 +36,15 @@ public class SendEmails extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String fromAddr = "fj2194@columbia.edu";	
+		//String fromAddr = "fj2194@columbia.edu";	
+		//String fromAddr = "jiangfengjiao89@126.com";
+		String fromAddr = request.getParameter("fromUserEmail");
+		//System.out.println(fromEmail);
 		String toAddr = request.getParameter("email");
 		String subject = request.getParameter("subject");
 		String content = request.getParameter("body");
-		System.out.println(toAddr + " " + subject + " " + content + " ");
+		System.out.println("Should be: ");
+		System.out.println(fromAddr+ " " + toAddr + " " + subject + " " + content + " ");
 		email = new Email(fromAddr, toAddr, subject,content);
 		emanage = new EmailManage();
 		emanage.sendEmail(email);

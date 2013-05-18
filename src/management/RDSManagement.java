@@ -523,14 +523,14 @@ public class RDSManagement {
 		try{
 			ResultSet res = null;
 			int userid = getUidByName(username);
-			String sql = "select friend.uid2, User.userName" +
-			             " from User,friend where friend.uid1 = " + userid +
+			String sql = "select friend.uid1, User.userName" +
+			             " from User,friend where friend.uid2 = " + userid +
 			             " and friend.states = " + status + 
-			             " and friend.uid2 = User.uid";
+			             " and friend.uid1 = User.uid";
 			st = (Statement)conn.createStatement();
 			res = st.executeQuery(sql);
 			while(res.next()){
-				int currentid = res.getInt("uid2");
+				int currentid = res.getInt("uid1");
 				String currentName = res.getString("userName");
 				fid.add(currentid);
 				fname.add(currentName);
@@ -565,7 +565,6 @@ public class RDSManagement {
 	}
 	
 	public void acceptRequest(String sendName,String receiveName) throws SQLException{
-		//System.out.println("Here");
 		int sendid, friendid;
 		String sql1, sql2,sql3;
 		int status = 2;
@@ -622,5 +621,6 @@ public class RDSManagement {
 			}
 		}
 	}
+	
 	
 }
