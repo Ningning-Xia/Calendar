@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import table.eventTable;
+
 import management.RDSManagement;
 
 /**
@@ -44,7 +46,7 @@ public class DeleteEventServlet extends HttpServlet {
 		//s3_obj.s3.deleteObject(bucketName, key);
 		
 		RDSManagement rds = new RDSManagement();
-		rds.deleteEventById(key);
+		eventTable.deleteEventById(key);
 		
 		RequestDispatcher view = request.getRequestDispatcher("/listEventServlet");
 		view.forward(request, response);

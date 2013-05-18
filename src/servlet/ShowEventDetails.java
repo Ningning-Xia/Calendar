@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import table.eventTable;
+
 import management.RDSManagement;
 import model.Event;
 
@@ -47,9 +49,9 @@ public class ShowEventDetails extends HttpServlet {
 		RDSManagement rds = new RDSManagement();
 		if (action != null){
 			destination = "CreateEvent.jsp?action=Edit";
-			event = rds.getEventByName(ename, 1);
+			event = eventTable.getEventByName(ename, 1);
 		} else {
-			event = rds.getEventByName(ename,0); // use mode 0, get usernames and actions
+			event = eventTable.getEventByName(ename,0); // use mode 0, get usernames and actions
 		}
 		request.setAttribute("event", event);
 		if (event != null)

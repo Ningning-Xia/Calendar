@@ -32,7 +32,7 @@
 				<th>Created By</th>
 				<th>Start Time</th>
 				<th>End Time</th>
-				<th colspan = "3">Action</th>
+				<th colspan = "4">Action</th>
 			</tr>
 			<%
 				String ename, startTime, endTime;	
@@ -50,6 +50,7 @@
 			<tr>
 				<form action="ShowEventDetails" method="post">
 					<input type="hidden" name="key" value=<%=eid%> />
+					<input type="text" name="eid" value=<%=eid%> />
 					<td><%=i+1 %></td>
 					<td><%=ename%></td>
 					<td><%=createBy %></td>
@@ -60,12 +61,11 @@
 						<td><input type="submit" class = "button" value="Edit"
 						onclick="form.action='ShowEventDetails?action=Edit&key=<%=ename%>';"></td>
 					<td><a class="button fancybox fancybox.iframe" rel="group" href="ShowEventDetails?key=<%=ename%>">Details</a></td>
-					
+					<td> <a class = "button" value = "Video" href = "ListVideoServlet?eid=<%=eid%>">Video</a></td>
 				</form>
 			</tr>
 
-			<%
-					
+			<%	
 				}
 			%>
 			

@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import table.eventTable;
+
 import management.RDSManagement;
 import model.Event;
 import model.User;
@@ -48,7 +50,7 @@ public class listEventServlet extends HttpServlet {
 		
 		ArrayList<Event> eventList = new ArrayList<Event>();
 		RDSManagement rds = new RDSManagement();
-		eventList = rds.getEventsByTime(uid);
+		eventList = eventTable.getEventsByTime(uid);
 		request.setAttribute("eventList", eventList);
 		RequestDispatcher view = request.getRequestDispatcher("ManageEvents.jsp");
 		view.forward(request, response);
