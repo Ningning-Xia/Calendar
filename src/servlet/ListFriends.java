@@ -45,8 +45,8 @@ public class ListFriends extends HttpServlet {
 		int status = 2;
 		try {
 			rds.getFriendList(friendsId, friendsName, username,status);
-			System.out.println(friendsId.get(0));
-			System.out.println(friendsName.get(1));
+			/*System.out.println(friendsId.get(0));
+			System.out.println(friendsName.get(1));*/
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
