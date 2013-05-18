@@ -151,6 +151,42 @@ a:hover {text-decoration: underline; color: yellow;}
 	cellspacing: 22px;
 
 }
+
+#email{
+	position:absolute;
+	left:300px;
+	top:100px;
+	width:32em;
+}
+
+#search{
+	position:absolute;
+	left:400px;
+	top:150px;
+	width: 32em;
+}
+.checkbox{
+	display:inline-block;
+	width:39px;
+	height:39px;
+	margin:-1px 4px 0 0;
+	vertical-align:middle;
+	cursor:pointer;
+}
+
+#request{
+	position:absolute;
+	right:50px;
+	top:80px;
+}
+
+#friends{
+	position:absolute;
+	left:50px;
+	top:80px;
+}
+
+
 tr.week_header_row {
 	color: #ffffff;
 }

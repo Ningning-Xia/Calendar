@@ -17,13 +17,13 @@ public class RDSManagement {
 
 	//public static String DBurl =
 	//public static String DBurl = "jdbc:mysql://mycalendar.cthu6j2tpw8v.us-east-1.rds.amazonaws.com:3306/mycalendar";
-	public static String DBurl = "jdbc:mysql://localhost:3306/mycalendar";
-	//public static String DBurl = "jdbc:mysql://judyjava.ccbbwwkvrqk2.us-east-1.rds.amazonaws.com:3306/video";
+	//public static String DBurl = "jdbc:mysql://localhost:3306/mycalendar";
+	public static String DBurl = "jdbc:mysql://judyjava.ccbbwwkvrqk2.us-east-1.rds.amazonaws.com:3306/video";
 	public static Connection conn;
 	public static Statement st;
 
 	public RDSManagement() {
-	}
+	}//user
 
 	public static void main(String[] args) {
 
@@ -38,8 +38,8 @@ public class RDSManagement {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			String url = DBurl;
-			//conn = DriverManager.getConnection(url, "admin", "12345678");
-			conn = DriverManager.getConnection(url, "root", "123456");
+			conn = DriverManager.getConnection(url, "judy", "jj890521");
+			//conn = DriverManager.getConnection(url, "root", "123456");
 
 			if (conn != null) {
 				System.out.println("get datasource succeed!");
@@ -136,7 +136,7 @@ public class RDSManagement {
 				for (int i = 0; i < 4; i++){
 					uidList.add(new ArrayList<String>());
 				}
-				sql = "select userName, action from invitation i JOIN user u on i.uid = u.uid where i.eid = "
+				sql = "select userName, action from invitation i JOIN User u on i.uid = u.uid where i.eid = "
 						+ eid;
 				st = (Statement) conn.createStatement();
 				ResultSet rs_tmp = st.executeQuery(sql);
@@ -264,7 +264,7 @@ public class RDSManagement {
 				pic = rs.getString("pic");
 				privacy = Integer.parseInt(rs.getString("privacy"));
 				//System.out.println("event id: "+ eid);
-				sql = "select userName, action from invitation i JOIN user u on i.uid = u.uid where i.eid = "
+				sql = "select userName, action from invitation i JOIN User u on i.uid = u.uid where i.eid = "
 						+ eid;
 				st = (Statement) conn.createStatement();
 				ResultSet rs_tmp = st.executeQuery(sql);
@@ -421,7 +421,7 @@ public class RDSManagement {
 			conn = getConnection();
 			userinfo = new ArrayList<ArrayList<String>>();
 			ArrayList<String> record = null; 
-			String sql = "select email from user where userName = '"+username+"'";
+			String sql = "select email from User where userName = '"+username+"'";
 			System.out.println(sql);
 			st = (Statement) conn.createStatement();
 			//pre.setString(1, username);
@@ -451,7 +451,7 @@ public class RDSManagement {
 		int uid = -1;
 		try{
 			 conn = getConnection();
-			 String sql = "select uid from user where userName = '"+uname+"'";
+			 String sql = "select uid from User where userName = '"+uname+"'";
 			 st = (Statement)conn.createStatement();
 			 ResultSet res = st.executeQuery(sql);
 			 while(res.next())
@@ -466,27 +466,6 @@ public class RDSManagement {
 		return uid;
 	}
 	
-	
-	/*public void sendFriendRequest(String sendname, String friendname) throws SQLException{
-		try{
-			conn = getConnection();
-			int sendid = getUidByName(sendname);
-			int friendid = getUidByName(friendname);
-			if((sendid != -1) && (friendid != -1)){
-				int status = 1;
-				String sql = "update friend set status = "+ status + " where uid1 = " + sendid + 
-						     " and uid2 = " + friendid;
-				st = (Statement)conn.createStatement();
-				st.executeUpdate(sql);
-			}
-			
-		}catch (Exception e){
-			System.out.println(e.getMessage());
-		}finally {
-			st.close();
-			conn.close();
-		}
-	}*/
 	
 	public boolean sendFriendRequest(String sendName,String receiveName) throws SQLException{
 		System.out.println("Here");
@@ -510,6 +489,7 @@ public class RDSManagement {
 				System.out.println(sql2);
 				st.executeUpdate(sql2);
 			}
+			else{
 			res = null;
 			int count = 0;
 			sql3 = "select count(*) from friend";
@@ -525,6 +505,7 @@ public class RDSManagement {
 				 + friendid + "," + status + ")";
 			st = (Statement)conn.createStatement();
 			st.executeUpdate(sql3);
+			}
 			
 		}catch (Exception e){
 			System.out.println(e.getMessage());
@@ -542,10 +523,10 @@ public class RDSManagement {
 		try{
 			ResultSet res = null;
 			int userid = getUidByName(username);
-			String sql = "select friend.uid2, user.userName" +
-			             " from user,friend where friend.uid1 = " + userid +
+			String sql = "select friend.uid2, User.userName" +
+			             " from User,friend where friend.uid1 = " + userid +
 			             " and friend.states = " + status + 
-			             " and friend.uid2 = user.uid";
+			             " and friend.uid2 = User.uid";
 			st = (Statement)conn.createStatement();
 			res = st.executeQuery(sql);
 			while(res.next()){

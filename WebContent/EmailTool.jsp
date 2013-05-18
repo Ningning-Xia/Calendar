@@ -6,21 +6,18 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="StyleSheet" href="./styles/calendar.css" type="text/css" />
 <title>Email Tool</title>
 </head>
 <body>
-This is Email Tool.
-<% ArrayList<String> EventNames = new ArrayList<String>(); %>
+<jsp:include page="header.jsp"/>
 
+<% ArrayList<String> EventNames = new ArrayList<String>(); %>
 <form action = "ListEvent" method = "post">
 <input type = "hidden" name = "uid" value = "1"> 
 <input type = "submit" value = "List Event" name = "1">
 </form>
 <% EventNames = (ArrayList<String>)request.getAttribute("enames");
-   //if(EventNames != null){
-	 //  for(String s: EventNames)
-	   //  out.println(s);
-   ///}
 %>
 <form action = "EventDetails" method = "post">
 <% if(EventNames != null){ 
@@ -36,19 +33,29 @@ int size = EventNames.size();%>
 </select>
 </form>
 
-<br><br>
+<div id = "email">
+<H2><font color ="white"> Send Emails: </font> </H2>
 <form action = "SendEmails" method = "post">
-Send Emails to: <input type = "text" name = "email">
-<br>
-subject:  <textarea name = "subject" id = "subject" style = "width: 220px; height: 15px;">
-</textarea>
-<br>
-<textarea name = "body" id = "body" style = "width: 300px; height: 250px;">
-</textarea>
-<br>
-<input type = "submit" value = "Send">
-</form>
 
+<table>
+<tr>
+<td><input type = "button" value = "Send Email to" class = "button"></td>
+<td><input type = "text" name = "email"></td>
+</tr>
+
+<tr>
+<td><input type = "button" value = "Subject" class = "button"></td>
+<td><textarea name = "subject" id = "subject" style = "width: 220px; height: 15px;">
+</textarea></td>
+</tr>
+</table>
+
+<textarea name = "body" id = "body" style = "width: 600px; height: 250px;">
+</textarea>
+
+<input type = "submit" value = "Send" class = "button">
+</form>
+</div>
 
 
 
