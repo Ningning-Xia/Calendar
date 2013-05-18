@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,19 +10,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import table.invitationTable;
 
-import management.RDSManagement;
-import model.Invitation;
-
 /**
- * Servlet implementation class listInvitationServlet
+ * Servlet implementation class UpdateInvitationServlet
  */
-public class listInvitationServlet extends HttpServlet {
+public class UpdateInvitationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public listInvitationServlet() {
+    public UpdateInvitationServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,7 +29,7 @@ public class listInvitationServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doPost(request,response);
+		doPost(request, response);
 	}
 
 	/**
@@ -41,14 +37,15 @@ public class listInvitationServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		int uid = 1;
+		int eid =  Integer.parseInt(request.getParameter("eid"));
+		int uid =  Integer.parseInt(request.getParameter("uid"));
+		int action = Integer.parseInt(request.getParameter("status"));
 		
-		RDSManagement rds = new RDSManagement();
-		ArrayList<Invitation> inviteList = invitationTable.getInvitationByUid(uid);
+		System.out.println(eid + " " + uid + " " + action);
 		
-		request.setAttribute("inviteList", inviteList);
-		RequestDispatcher view = request.getRequestDispatcher("Invitation.jsp");
-		view.forward(request, response);
+		invitationTable.updateInvitation(eid, uid, action);
+		RequestDispatcher view = request.getRequestDispatcher("listInvitationServlet");
+		view.forward(request,response);
 	}
 
 }
