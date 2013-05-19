@@ -16,8 +16,8 @@ import model.Invitation;
 public class RDSManagement {
 
 	//public static String DBurl = "jdbc:mysql://mycalendar.cthu6j2tpw8v.us-east-1.rds.amazonaws.com:3306/mycalendar";
-	public static String DBurl = "jdbc:mysql://localhost:3306/mycalendar";
-	//public static String DBurl = "jdbc:mysql://judyjava.ccbbwwkvrqk2.us-east-1.rds.amazonaws.com:3306/video";
+	//public static String DBurl = "jdbc:mysql://localhost:3306/mycalendar";
+	public static String DBurl = "jdbc:mysql://judyjava.ccbbwwkvrqk2.us-east-1.rds.amazonaws.com:3306/video";
 	public static Connection conn;
 	public static Statement st;
 
@@ -29,16 +29,14 @@ public class RDSManagement {
 		System.out.println("Test");
 
 		ArrayList<Event> eventList = new ArrayList<Event>();
-		//eventList = getEventsByTime(2);
-		//getInvitationByUid(1);
 	}
 
 	public static Connection getConnection() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			String url = DBurl;
-			conn = DriverManager.getConnection(url, "root", "123456");
-			//conn = DriverManager.getConnection(url, "judy", "jj890521");
+			//conn = DriverManager.getConnection(url, "root", "123456");
+			conn = DriverManager.getConnection(url, "judy", "jj890521");
 
 			if (conn != null) {
 				System.out.println("get datasource succeed!");
@@ -277,43 +275,47 @@ public class RDSManagement {
 	
 	public void getFriendList(ArrayList<Integer> fid, ArrayList<String> fname,String username,
 		                      int status) throws SQLException{
+		/*status = 1 means friend request, status = 2 means friend list.*/
+		String sql = null;
+		ResultSet res = null;
 		try{
-			ResultSet res = null;
 			int userid = getUidByName(username);
-			String sql = null;
 			if(status == 1){
-		    System.out.println("It's here");
-			sql = "select friend.uid1, User.userName" +
-			             " from User,friend where friend.uid2 = " + userid +
-			             " and friend.states = " + status + 
-			             " and friend.uid1 = User.uid";
+				sql = "select friend.uid1, User.userName"+
+			          " from User, friend where friend.uid2 = " + userid +
+			          " and friend.states = " + status +
+			          " and friend.uid1 = User.uid";
 			}
 			else if(status == 2){
-				System.out.println("Ops It's here" + userid);
-				sql = "select friend.uid2, User.userName" +
-			          " from User, friend where friend.uid1 = " + userid +
-			          " and friend.states = " + status +
-			          " and friend.uid2 = User.uid";
+				sql = "select User.uid,User.userName from User" + 
+			         " where User.uid in " + 
+					"(select friend.uid1 from friend where friend.uid2 = "
+			         + userid + " and friend.states = " + status +
+			         " union " +
+			         "select friend.uid2 from friend where friend.uid1 = " 
+			         + userid + " and friend.states = " + status + ")";  
 			}
 			st = (Statement)conn.createStatement();
 			res = st.executeQuery(sql);
 			while(res.next()){
-				int currentid;
-				if(status == 1){
+				int currentid = 0;
+				String currentName = null;
+				if(status == 1)
 					currentid = res.getInt("uid1");
-				}
-				else
-					currentid = res.getInt("uid2");
-				String currentName = res.getString("userName");
+				else if(status == 2)
+					currentid = res.getInt("uid");
+				currentName = res.getString("userName");
 				fid.add(currentid);
 				fname.add(currentName);
 			}
+			
 		}catch (Exception e){
 			System.out.println(e.getMessage());
 		}finally{
 			st.close();
 			conn.close();
 		}
+		
 	}
 	
 	public boolean DeleteFriends(String userName, String deleteName) throws SQLException{
@@ -322,14 +324,18 @@ public class RDSManagement {
 		int result = 0;
 		try{
 			conn = getConnection();
-			/*String sql = "delete from friend where uid1 = " + userId +
-					     " and uid2 = " + friendId;*/
 			String sql = "update friend set states = 3 where uid1 = " +userId + 
 					     " and uid2 = " + friendId;
 			st = (Statement)conn.createStatement();
 			result = st.executeUpdate(sql);
-			if(result == 0)
-				return false;
+			if(result == 0){
+				sql = "update friend set states = 3 where uid1 = " + friendId +
+					  " and uid2 = " + userId;
+				st = (Statement)conn.createStatement();
+				result = st.executeUpdate(sql);
+				if(result == 0)
+					return false;
+			}
 		}catch (Exception e){
 			System.out.println(e.getMessage());
 		}finally{
@@ -454,7 +460,6 @@ public class RDSManagement {
 				st.close();
 				conn.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
