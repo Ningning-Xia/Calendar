@@ -6,7 +6,23 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="StyleSheet" href="./styles/calendar.css" type="text/css" />
-<title>Insert title here</title>
+<title>Search Friends</title>
+<style type="text/css">
+input.search-query {
+	height: 30px;
+  padding-right: 14px;
+  padding-right: 4px \9;
+  padding-left: 14px;
+  padding-left: 4px \9;
+  /* IE7-8 doesn't have border-radius, so don't indent the padding */
+
+  margin-bottom: 0;
+  -webkit-border-radius: 15px;
+     -moz-border-radius: 15px;
+          border-radius: 15px;
+}
+
+</style>
 </head>
 <body>
 <jsp:include page="header.jsp"/>
@@ -46,14 +62,21 @@
 
 
 
-<div id = "search">
+<div id = "search" >
 <H2><font color ="white"> Search Your Friends: </font> </H2>
+<table>
 <% ArrayList<ArrayList<String>> userinfo = new ArrayList<ArrayList<String>>(); %>
 <form action = "searchFriends" method = "post">
-<input type = "text" name = "username" size = "35">
+<tr> 
+<td>
+<input class="search-query" type = "text" name = "username" size = "80" height = "30" placeholder="Search by Username">
+</td>
+<td>
 <input type = "submit" name = "search" value = "search" class = "button">
+</td>
+</tr>
 </form>
-
+</table>
 
 <% userinfo = (ArrayList<ArrayList<String>>)request.getAttribute("userinfo");%>
 <% if(userinfo != null && userinfo.size() != 0){ %>

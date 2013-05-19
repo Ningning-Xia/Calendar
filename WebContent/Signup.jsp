@@ -60,7 +60,7 @@
 	}
 
 	function checkEmail() {
-		var email = document.getElementById("email").value;
+		var email = document.SignupForm.email.value;
 		;
 		var re = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
 		var i;
@@ -76,6 +76,7 @@
 		}
 		return true;
 	}
+	
 </SCRIPT>
 
 
