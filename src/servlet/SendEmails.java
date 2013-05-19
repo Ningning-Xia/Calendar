@@ -3,6 +3,8 @@ package servlet;
 import model.Email;
 import management.EmailManage;
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -48,7 +50,8 @@ public class SendEmails extends HttpServlet {
 		email = new Email(fromAddr, toAddr, subject,content);
 		emanage = new EmailManage();
 		emanage.sendEmail(email);
-		
+		RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/EmailTool.jsp");
+		requestDispatcher.forward(request, response);
 	}
 
 }

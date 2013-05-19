@@ -58,7 +58,7 @@ int size = EventNames.size();%>
 <textarea name = "body" id = "body" style = "width: 600px; height: 250px;">
 </textarea>
 
-<input type = "submit" value = "Send" class = "button">
+<input type = "submit" value = "Send" class = "button" />
 </form>
 </div>
 
