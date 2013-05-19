@@ -37,7 +37,7 @@ public class RDSManagement {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			String url = DBurl;
-			conn = DriverManager.getConnection(url, "root", "123456");
+			conn = DriverManager.getConnection(url, "root", "12345678");
 			//conn = DriverManager.getConnection(url, "judy", "jj890521");
 
 			if (conn != null) {
@@ -280,14 +280,30 @@ public class RDSManagement {
 		try{
 			ResultSet res = null;
 			int userid = getUidByName(username);
-			String sql = "select friend.uid1, User.userName" +
+			String sql = null;
+			if(status == 1){
+		    System.out.println("It's here");
+			sql = "select friend.uid1, User.userName" +
 			             " from User,friend where friend.uid2 = " + userid +
 			             " and friend.states = " + status + 
 			             " and friend.uid1 = User.uid";
+			}
+			else if(status == 2){
+				System.out.println("Ops It's here" + userid);
+				sql = "select friend.uid2, User.userName" +
+			          " from User, friend where friend.uid1 = " + userid +
+			          " and friend.states = " + status +
+			          " and friend.uid2 = User.uid";
+			}
 			st = (Statement)conn.createStatement();
 			res = st.executeQuery(sql);
 			while(res.next()){
-				int currentid = res.getInt("uid1");
+				int currentid;
+				if(status == 1){
+					currentid = res.getInt("uid1");
+				}
+				else
+					currentid = res.getInt("uid2");
 				String currentName = res.getString("userName");
 				fid.add(currentid);
 				fname.add(currentName);
@@ -306,7 +322,9 @@ public class RDSManagement {
 		int result = 0;
 		try{
 			conn = getConnection();
-			String sql = "delete from friend where uid1 = " + userId +
+			/*String sql = "delete from friend where uid1 = " + userId +
+					     " and uid2 = " + friendId;*/
+			String sql = "update friend set states = 3 where uid1 = " +userId + 
 					     " and uid2 = " + friendId;
 			st = (Statement)conn.createStatement();
 			result = st.executeUpdate(sql);

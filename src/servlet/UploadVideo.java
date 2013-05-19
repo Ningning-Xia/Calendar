@@ -16,10 +16,10 @@ import javax.servlet.http.HttpServletResponse;
 import management.S3Class;
 import model.User;
 
-import org.apache.tomcat.util.http.fileupload.FileItemIterator;
+/*import org.apache.tomcat.util.http.fileupload.FileItemIterator;
 import org.apache.tomcat.util.http.fileupload.FileItemStream;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;*/
 
 import table.eventTable;
 
@@ -57,8 +57,13 @@ public class UploadVideo extends HttpServlet {
 		// TODO Auto-generated method stub
 		S3Class s3_obj = new S3Class();
 
+<<<<<<< HEAD
+		/*boolean isMulti = ServletFileUpload.isMultipartContent(request);
+		if (isMulti) {
+=======
 		boolean isMulti = ServletFileUpload.isMultipartContent(request);
 		//if (isMulti) {
+>>>>>>> da525bcea2f8e5babcf4ac2e100bfae38ff917a7
 			System.out.println("1");
 			ServletFileUpload upload = new ServletFileUpload();
 
@@ -100,19 +105,7 @@ public class UploadVideo extends HttpServlet {
 							File tempFile = File
 									.createTempFile(tmpName, ".tmp");
 							tempFile.deleteOnExit();
-							/*
-							 * FileOutputStream fout = null;
-							 * 
-							 * try { fout = new FileOutputStream(tempFile); int
-							 * c;
-							 * 
-							 * while ((c = inputStream.read()) != -1) {
-							 * fout.write(c); } } catch (Exception e) {
-							 * System.err.println(e); } finally { if
-							 * (inputStream != null) { inputStream.close(); } if
-							 * (fout != null) { fout.close(); } }
-							 */
-
+							
 							OutputStream outputStream = null;
 							try {
 								System.out.println("5");
@@ -157,9 +150,17 @@ public class UploadVideo extends HttpServlet {
 			} catch (Exception e) {
 				System.err.println(e.getMessage());
 			}
+<<<<<<< HEAD
+		}*/
+		
+		String test = request.getParameter("whoseeid");
+		System.out.println("It's pure test " + test);
+		RequestDispatcher view = request.getRequestDispatcher("UserHome.jsp");
+=======
 		//}
 		
 		RequestDispatcher view = request.getRequestDispatcher("/ListVideoServlet");
+>>>>>>> da525bcea2f8e5babcf4ac2e100bfae38ff917a7
 		view.forward(request, response);
 	}
 
