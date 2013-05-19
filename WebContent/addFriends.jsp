@@ -32,6 +32,7 @@
 <table class = "table table-hover" id = "events">
 <%for(int i = 0; i < friendListName.size(); i++){%>
 <tr>
+<td><a href = "friendPage.jsp?user=<%=friendListName.get(i)%>">See</a>
 <td>Name: </td>
 <td><%= friendListName.get(i) %></td>
 <td><input type = "checkbox" name = "friend" value = <%=friendListName.get(i) %>></td>
@@ -42,8 +43,6 @@
 <input type = "submit" class = "button" value = "Delete"><%}%>
 </form>
 </div>
-
-
 
 
 

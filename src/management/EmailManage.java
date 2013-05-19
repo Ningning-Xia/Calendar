@@ -38,6 +38,9 @@ public class EmailManage {
 		body.withText(textBody);
 		message.withSubject(subject).withBody(body);
 		request.withSource(email.getFromAddr()).withDestination(destination).withMessage(message);
+		System.out.println("Email Test");
+		System.out.println(email.getFromAddr());
+		System.out.println(email.getToAddr());
 		
 		try{
 			System.out.println("Attenmpting to send an email.....");

@@ -46,9 +46,7 @@ public class friendRequests extends HttpServlet {
 		rds = new RDSManagement();
 		try {
 			rds.getFriendList(requestsId, requestsName, userName, status);
-			//System.out.println(requestsName.get(0));
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

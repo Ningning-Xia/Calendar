@@ -16,8 +16,8 @@ import model.Invitation;
 public class RDSManagement {
 
 	//public static String DBurl = "jdbc:mysql://mycalendar.cthu6j2tpw8v.us-east-1.rds.amazonaws.com:3306/mycalendar";
-	public static String DBurl = "jdbc:mysql://localhost:3306/mycalendar";
-	//public static String DBurl = "jdbc:mysql://judyjava.ccbbwwkvrqk2.us-east-1.rds.amazonaws.com:3306/video";
+	//public static String DBurl = "jdbc:mysql://localhost:3306/mycalendar";
+	public static String DBurl = "jdbc:mysql://judyjava.ccbbwwkvrqk2.us-east-1.rds.amazonaws.com:3306/video";
 	public static Connection conn;
 	public static Statement st;
 
@@ -38,7 +38,7 @@ public class RDSManagement {
 			Class.forName("com.mysql.jdbc.Driver");
 			String url = DBurl;
 			//conn = DriverManager.getConnection(url, "judy", "jj890521");
-			conn = DriverManager.getConnection(url, "root", "123456");
+			conn = DriverManager.getConnection(url, "judy", "jj890521");
 
 			if (conn != null) {
 				System.out.println("get datasource succeed!");
@@ -280,14 +280,14 @@ public class RDSManagement {
 		try{
 			ResultSet res = null;
 			int userid = getUidByName(username);
-			String sql = "select friend.uid2, User.userName" +
-			             " from User,friend where friend.uid1 = " + userid +
+			String sql = "select friend.uid1, User.userName" +
+			             " from User,friend where friend.uid2 = " + userid +
 			             " and friend.states = " + status + 
-			             " and friend.uid2 = User.uid";
+			             " and friend.uid1 = User.uid";
 			st = (Statement)conn.createStatement();
 			res = st.executeQuery(sql);
 			while(res.next()){
-				int currentid = res.getInt("uid2");
+				int currentid = res.getInt("uid1");
 				String currentName = res.getString("userName");
 				fid.add(currentid);
 				fname.add(currentName);
@@ -321,8 +321,8 @@ public class RDSManagement {
 		return true;
 	}
 	
-	public void acceptRequest(String sendName,String receiveName) throws SQLException{
-		//System.out.println("Here");
+	public void acceptRequest(String requestgetName,String requestsendName) throws SQLException{
+		//acceptRequest(requestgetName, requestsendName);
 		int sendid, friendid;
 		String sql1, sql2,sql3;
 		int status = 2;
@@ -330,15 +330,16 @@ public class RDSManagement {
 		
 		try{
 			conn = getConnection();
-			sendid = getUidByName(sendName);
-			friendid = getUidByName(receiveName);
-			sql1 = "select * from friend where uid1 = " + sendid + " and uid2 = " + friendid;
+			sendid = getUidByName(requestgetName);
+			friendid = getUidByName(requestsendName);
+			System.out.println(sendid + " " + friendid);
+			sql1 = "select * from friend where uid1 = " + friendid + " and uid2 = " + sendid;
 			System.out.println(sql1);
 			st = (Statement)conn.createStatement();
 			res = st.executeQuery(sql1);
 			if(res.next()){
-				sql2 = "update friend set states = " + status + " where uid1 = " + sendid + 
-						" and uid2 = " + friendid;
+				sql2 = "update friend set states = " + status + " where uid1 = " + friendid + 
+						" and uid2 = " + sendid;
 				st = (Statement)conn.createStatement();
 				System.out.println(sql2);
 				st.executeUpdate(sql2);
@@ -379,5 +380,69 @@ public class RDSManagement {
 			}
 		}
 	}
+	
+	public static ArrayList<Event> getEventsByTime(int uid) {
+		conn = getConnection();
+		ArrayList<Event> eventList = new ArrayList<Event>();
+		try {
+			ArrayList<ArrayList<String>> uidList = new ArrayList<ArrayList<String>>();
+			for (int i = 0; i < 4; i++){
+				uidList.add(new ArrayList<String>());
+			}
+			String sql = "select * from event where uid = " + uid
+					+ " order by eid DESC";
+			System.out.println("Select all events for user " + uid
+					+ " sorted by create time");
+
+			st = (Statement) conn.createStatement();
+			String ename, startTime, endTime, location, pic, video, description;
+			int eid, privacy;
+			ResultSet rs = st.executeQuery(sql);
+			while (rs.next()) {
+				eid = Integer.parseInt(rs.getString("eid"));
+				ename = rs.getString("ename");
+				startTime = rs.getString("startTime");
+				endTime = rs.getString("endTime");
+				location = rs.getString("location");
+				description = rs.getString("description");
+				video = rs.getString("video");
+				pic = rs.getString("pic");
+				privacy = Integer.parseInt(rs.getString("privacy"));
+				//System.out.println("event id: "+ eid);
+				sql = "select userName, action from invitation i JOIN User u on i.uid = u.uid where i.eid = "
+						+ eid;
+				st = (Statement) conn.createStatement();
+				ResultSet rs_tmp = st.executeQuery(sql);
+				while (rs_tmp.next()) {
+					String userName = rs_tmp.getString("userName");
+					int action = Integer.parseInt(rs_tmp.getString("action"));
+					uidList.get(action).add(userName);
+					//System.out.println("Event id: "+eid+" user: "+userName + " action: " + action);
+				}
+
+				Event event = new Event(eid, uid, ename, startTime, endTime,
+						location, pic, video, description, privacy, uidList);
+				eventList.add(event);
+				/*System.out.println("Event :id " + eid + " name " + ename
+						+ " start time " + startTime);*/
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+
+		} finally {
+			try {
+				st.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return eventList;
+	}
+	
 	
 }
