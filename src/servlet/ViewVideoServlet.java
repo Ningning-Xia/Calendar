@@ -38,6 +38,14 @@ public class ViewVideoServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		String key = request.getParameter("key");
+		String eid = request.getParameter("eid");
+		System.out.println("key" + key);
+		System.out.println("eid" + eid);
+		
+		
+		if (eid != null) {
+			request.setAttribute("eid", eid);
+		}
 		
 		if (key == null) {
 			System.out.println("null key");
@@ -64,7 +72,8 @@ public class ViewVideoServlet extends HttpServlet {
 		request.setAttribute("view", key);
 		request.setAttribute("stream", stream);
 		request.setAttribute("download", download);
-		RequestDispatcher view = request.getRequestDispatcher("/ListVideoServlet");
+
+		RequestDispatcher view = request.getRequestDispatcher("ListVideoServlet");
 		view.forward(request, response);
 	}
 

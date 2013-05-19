@@ -94,6 +94,14 @@
 						<% }%> <a href="Login.jsp">Login</a>
 					</li>
 
+					<% if(path.equals("/Signup.jsp")) {%>
+					<li class="active">
+						<% } else {%>
+					
+					<li class="">
+						<% }%> <a href="Signup.jsp">Sign Up</a>
+					</li>
+					
 
 					<%} %>
 				</ul>

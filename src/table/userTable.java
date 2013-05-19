@@ -37,12 +37,76 @@ public class userTable {
 			}
 			//return user;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				st.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		System.out.println("User id " + user.getUid() + " User Name: " + user.getUserName());
 		return user;		
 	}
+	
+	public static boolean checkByUsername(String userName) {
+		boolean valid = true;
+		try {
+			conn = RDSManagement.getConnection();
+			st = (Statement) conn.createStatement();
+			String sql = "select * from User where userName = '" + userName + "';";
+			System.out.println(sql);
+			ResultSet rs = st.executeQuery(sql);
+			if (rs.next()) {
+				valid = false;
+			}
+			//return user;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				st.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return valid;		
+	}
+	
+	public static boolean checkByEmail(String email) {
+		boolean valid = true;
+		try {
+			conn = RDSManagement.getConnection();
+			st = (Statement) conn.createStatement();
+			String sql = "select * from User where email = '" + email + "';";
+			System.out.println(sql);
+			ResultSet rs = st.executeQuery(sql);
+			if (rs.next()) {
+				valid = false;
+			}
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				st.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return valid;		
+	}
+	
+	
 	
 	public static int insertOneUser(User user) {
 		int uid = getMaxUserID()+1;
@@ -117,10 +181,18 @@ public class userTable {
 			}
 			//return user;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				st.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		//int maxId = user.getUid();
 		return maxId;		
 	}
 	

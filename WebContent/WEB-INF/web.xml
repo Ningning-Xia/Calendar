@@ -232,6 +232,7 @@
   </servlet-mapping>
   <servlet>
     <description></description>
+<<<<<<< HEAD
     <display-name>testservlet</display-name>
     <servlet-name>testservlet</servlet-name>
     <servlet-class>servlet.testservlet</servlet-class>
@@ -239,5 +240,64 @@
   <servlet-mapping>
     <servlet-name>testservlet</servlet-name>
     <url-pattern>/testservlet</url-pattern>
+=======
+    <display-name>ListPhotoServlet</display-name>
+    <servlet-name>ListPhotoServlet</servlet-name>
+    <servlet-class>servlet.ListPhotoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ListPhotoServlet</servlet-name>
+    <url-pattern>/ListPhotoServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UploadPhotoServlet</display-name>
+    <servlet-name>UploadPhotoServlet</servlet-name>
+    <servlet-class>servlet.UploadPhotoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UploadPhotoServlet</servlet-name>
+    <url-pattern>/UploadPhotoServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>TestServlet</display-name>
+    <servlet-name>TestServlet</servlet-name>
+    <servlet-class>servlet.TestServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TestServlet</servlet-name>
+    <url-pattern>/TestServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ViewPhotoServlet</display-name>
+    <servlet-name>ViewPhotoServlet</servlet-name>
+    <servlet-class>servlet.ViewPhotoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ViewPhotoServlet</servlet-name>
+    <url-pattern>/ViewPhotoServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DeletePhotoServlet</display-name>
+    <servlet-name>DeletePhotoServlet</servlet-name>
+    <servlet-class>servlet.DeletePhotoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeletePhotoServlet</servlet-name>
+    <url-pattern>/DeletePhotoServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SignupServlet</display-name>
+    <servlet-name>SignupServlet</servlet-name>
+    <servlet-class>servlet.SignupServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SignupServlet</servlet-name>
+    <url-pattern>/SignupServlet</url-pattern>
+>>>>>>> da525bcea2f8e5babcf4ac2e100bfae38ff917a7
   </servlet-mapping>
 </web-app>

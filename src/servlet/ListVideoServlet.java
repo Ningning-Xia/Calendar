@@ -68,8 +68,8 @@ public class ListVideoServlet extends HttpServlet {
 			request.setAttribute("eid", eid);
 		}
 		//RDSManagement rds = new RDSManagement();
-		User user = (User)request.getSession().getAttribute("user");
-		int uid = user.getUid();
+		//User user = (User)request.getSession().getAttribute("user");
+		//int uid = user.getUid();
 		String video = eventTable.getVideoNameByEid(Integer.parseInt(eid));
 		
 		if (video != null) {

@@ -14,56 +14,54 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import management.S3Class;
-import model.User;
 
-/*import org.apache.tomcat.util.http.fileupload.FileItemIterator;
+import org.apache.tomcat.util.http.fileupload.FileItemIterator;
 import org.apache.tomcat.util.http.fileupload.FileItemStream;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;*/
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import table.eventTable;
+import table.photoTable;
 
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 
 /**
- * Servlet implementation class UploadVideo
+ * Servlet implementation class UploadPhotoServlet
  */
-public class UploadVideo extends HttpServlet {
+public class UploadPhotoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    
 	public static String bucketName = "ningxia91-bucket";
-	
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public UploadVideo() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public UploadPhotoServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doPost(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		S3Class s3_obj = new S3Class();
 
-<<<<<<< HEAD
-		/*boolean isMulti = ServletFileUpload.isMultipartContent(request);
-		if (isMulti) {
-=======
 		boolean isMulti = ServletFileUpload.isMultipartContent(request);
-		//if (isMulti) {
->>>>>>> da525bcea2f8e5babcf4ac2e100bfae38ff917a7
+		if (isMulti) {
 			System.out.println("1");
 			ServletFileUpload upload = new ServletFileUpload();
 
@@ -96,16 +94,32 @@ public class UploadVideo extends HttpServlet {
 						String[] fileInfo = type.split("/");
 						System.out.println(fileInfo[0]);
 
-						if (!fileInfo[0].equals("video")) {
-							String wrongType = "Sorry, please upload the file with right file type.";
-							request.setAttribute("wrongType", wrongType);
-						} else if (fileName != null && fileName.length() > 0) {
+						/*
+						 * if (!fileInfo[0].equals("video")) { String wrongType
+						 * =
+						 * "Sorry, please upload the file with right file type."
+						 * ; request.setAttribute("wrongType", wrongType); }
+						 * else
+						 */
+						if (fileName != null && fileName.length() > 0) {
 							System.out.println("4");
 
 							File tempFile = File
 									.createTempFile(tmpName, ".tmp");
 							tempFile.deleteOnExit();
-							
+							/*
+							 * FileOutputStream fout = null;
+							 * 
+							 * try { fout = new FileOutputStream(tempFile); int
+							 * c;
+							 * 
+							 * while ((c = inputStream.read()) != -1) {
+							 * fout.write(c); } } catch (Exception e) {
+							 * System.err.println(e); } finally { if
+							 * (inputStream != null) { inputStream.close(); } if
+							 * (fout != null) { fout.close(); } }
+							 */
+
 							OutputStream outputStream = null;
 							try {
 								System.out.println("5");
@@ -132,35 +146,23 @@ public class UploadVideo extends HttpServlet {
 							putObj.setCannedAcl(CannedAccessControlList.PublicRead);
 							System.out.println("9");
 							s3_obj.s3.putObject(putObj);
-							
-							System.out.println("10");
-							//String teststr = request.getParameter("testname");
-							//System.out.println(teststr);
-							int eid = Integer.parseInt(request.getParameter("eid"));
-							System.out.println(eid);
 
-							request.setAttribute("eid", eid);
-							
-							eventTable.updateEventVideo(eid, fileName);
-							
+							System.out.println(request.getParameter("eid"));
+							int eid = Integer.parseInt(request.getParameter("eid"));
+
+							System.out.println("eid " + eid + " filename " + fileName);
+							photoTable.insertOnePhoto(eid, fileName);
+
 							System.out.println("Successfully uploaded.");
 						}
 					}
 				}
 			} catch (Exception e) {
-				System.err.println(e.getMessage());
+				System.out.println(e);
 			}
-<<<<<<< HEAD
-		}*/
-		
-		String test = request.getParameter("whoseeid");
-		System.out.println("It's pure test " + test);
-		RequestDispatcher view = request.getRequestDispatcher("UserHome.jsp");
-=======
-		//}
-		
-		RequestDispatcher view = request.getRequestDispatcher("/ListVideoServlet");
->>>>>>> da525bcea2f8e5babcf4ac2e100bfae38ff917a7
+		}
+
+		RequestDispatcher view = request.getRequestDispatcher("ListPhotoServlet");
 		view.forward(request, response);
 	}
 

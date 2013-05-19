@@ -32,7 +32,7 @@
 				<th>Created By</th>
 				<th>Start Time</th>
 				<th>End Time</th>
-				<th colspan = "4">Action</th>
+				<th colspan = "5">Action</th>
 			</tr>
 			<%
 				String ename, startTime, endTime;	
@@ -56,12 +56,11 @@
 					<td><%=createBy %></td>
 					<td><%=startTime%></td>
 					<td><%=endTime%></td>
-					<td><input type="submit" class = "button" value="Delete"
-						onclick="alert('Are you sure you want to delete this event?'); form.action='DeleteEventServlet';"></td>
-						<td><input type="submit" class = "button" value="Edit"
-						onclick="form.action='ShowEventDetails?action=Edit&key=<%=ename%>';"></td>
-					<td><a class="button fancybox fancybox.iframe" rel="group" href="ShowEventDetails?key=<%=ename%>">Details</a></td>
-					<td> <a class = "button" value = "Video" href = "ListVideoServlet?eid=<%=eid%>">Video</a></td>
+					<td><a value="Delete" href = "DeleteEventServlet?key=<%=eid%>">Delete</a></td> 
+					<td><a value="Edit" href = "ShowEventDetails?action=Edit&key=<%=ename%>">Edit</a></td>
+					<td><a value="Details" class="fancybox fancybox.iframe" rel="group" href="ShowEventDetails?key=<%=ename%>">Details</a></td>
+					<td> <a  value = "Video" href = "ListVideoServlet?eid=<%=eid%>">Video</a></td>
+					<td> <a  value = "Photo" href = "ListPhotoServlet?eid=<%=eid%>">Photo</a></td>
 				</form>
 			</tr>
 

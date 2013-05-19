@@ -90,19 +90,20 @@ var password=document.loginForm.password.value;
     <div class="container">
 
       <form class="form-signin" name = "loginForm" onsubmit = "return check()" method="post" action="LoginServlet">
-        <table>
+        <table align = "center">
         <tr> <td align = "center" colspan="2"> 
-        <h2 class="form-signin-heading">Please sign in</h2>
+        <h2 class="form-signin-heading">Login</h2>
+        <tr> <td> <br></td></tr>
         </td></tr>
-      
         <tr> <td> Account </td><td> 
         <input name = "account" type="text" placeholder="Account">
         </td></tr>
+        
         <tr><td>Password </td><td>
         <input name = "password" type="password" placeholder="Password">
         </td></tr>
         <tr> <td align = "center" colspan = "2">
-        <button class="button" type="submit">Sign in</button>
+        <button class="button" type="submit">Login</button>
          <button class="button" type="reset">Reset</button>
         </td></tr>
         <br>
