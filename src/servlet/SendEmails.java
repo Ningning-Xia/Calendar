@@ -3,6 +3,8 @@ package servlet;
 import model.Email;
 import management.EmailManage;
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -35,11 +37,7 @@ public class SendEmails extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//String fromAddr = "fj2194@columbia.edu";	
-		//String fromAddr = "jiangfengjiao89@126.com";
 		String fromAddr = request.getParameter("fromUserEmail");
-		//System.out.println(fromEmail);
 		String toAddr = request.getParameter("email");
 		String subject = request.getParameter("subject");
 		String content = request.getParameter("body");
@@ -49,6 +47,8 @@ public class SendEmails extends HttpServlet {
 		emanage = new EmailManage();
 		emanage.sendEmail(email);
 		
+		RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/addFriends.jsp");
+		requestDispatcher.forward(request, response);
 	}
 
 }
