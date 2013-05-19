@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import table.eventTable;
 
 import management.RDSManagement;
+import model.Event;
 
 /**
  * Servlet implementation class EditEventServlet
@@ -73,7 +74,10 @@ public class EditEventServlet extends HttpServlet {
 			ArrayList<Integer> userList = rds.findUidByEmail(invited_list);
 			rds.addInvitation(eid, userList);  // need to check if exist
 		}
-		
+
+		ArrayList<Event> eventList = new ArrayList<Event>();
+		eventList = eventTable.getEventsByTime(uid);
+		request.getSession().setAttribute("eventList", eventList);
 		RequestDispatcher view = request.getRequestDispatcher("/listEventServlet");
 		view.forward(request, response);
 	}

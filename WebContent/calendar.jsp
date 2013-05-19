@@ -1,4 +1,4 @@
-<%@ page import="com.devdaily.calendar.Month, java.util.*,java.io.*,java.sql.*, model.User" %>
+<%@ page import="com.devdaily.calendar.Month, java.util.*, java.text.SimpleDateFormat, java.io.*,java.sql.*, model.User, model.Event" %>
 <%-- TODO: CLEAN UP THE PAGE TAG ABOVE --%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -78,10 +78,26 @@
   
   <div id = "celendar_body_div">
   <table id="calendar" cellspacing = "4px">
-<%
-{
+  <%
+				String ename, startTime, endTime;	
+				int createBy, eid;
+					ArrayList<Event> eventList = (ArrayList<Event>)session.getAttribute("eventList");
+					int size = 0;
+					if (eventList != null){
+						size = eventList.size();
+						System.out.println("event not null");
+					}
+					
+
+
   Month aMonth = Month.getMonth( Integer.parseInt(currentMonthString), Integer.parseInt(currentYearString) );
   int [][] days = aMonth.getDays();
+  java.util.Date date;
+	java.util.Date sdate;
+	java.util.Date edate;
+
+	SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+	
   for( int i=0; i<aMonth.getNumberOfWeeks(); i++ )
   {
     %><tr class="week_data_row"><%
@@ -93,21 +109,38 @@
       }
       else
       {
+
         // this is "today"
         if( currentDayInt == days[i][j] && currentMonthInt == aMonth.getMonth() && currentYearInt == aMonth.getYear() )
         {
-          %><td class="today_cell"> <font color = "red"><%=days[i][j]%></font></td><%
+          %><td class="today_cell"> <font color = "red"><%=days[i][j]%></font><%
         }
         else
         {
-          %><td class="day_cell"><%=days[i][j]%></td><%
+          %><td class="day_cell"><%=days[i][j]%><%
         }
+        date = new java.util.Date(aMonth.getYear()-1900, aMonth.getMonth(), days[i][j]);
+        for (int k =0; k<size; k++){
+        	Event event = eventList.get(k);
+        	sdate=dateFormat.parse(event.getStart_time().split(" ")[0]);
+        	edate=dateFormat.parse(event.getEnd_time().split(" ")[0]);
+        	
+        	if(date.compareTo(sdate)>=0 && date.compareTo(edate)<=0) {
+        		String eventName=event.getEvent_name();
+       
+        		%>
+        		<br><a value="Details" class="fancybox fancybox.iframe" rel="group" href="ShowEventDetails?key=<%=eventName%>"><font color = "blue"><%=eventName%></font></a>
+        		<%
+        	}
+        }
+        %></td><%
+        
       } // end outer if
     } // end for
     %>
     </tr>
   <%}
-}
+
 %>
 </table>
 </div>
