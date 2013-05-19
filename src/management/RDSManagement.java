@@ -37,7 +37,7 @@ public class RDSManagement {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			String url = DBurl;
-			conn = DriverManager.getConnection(url, "root", "123456");
+			conn = DriverManager.getConnection(url, "root", "12345678");
 			//conn = DriverManager.getConnection(url, "judy", "jj890521");
 
 			if (conn != null) {
