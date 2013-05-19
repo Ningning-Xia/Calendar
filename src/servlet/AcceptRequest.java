@@ -35,11 +35,11 @@ public class AcceptRequest extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String friendName = request.getParameter("friend");
-		String userName = request.getParameter("whoacceptfriend");
+		String requestsendName = request.getParameter("friend");
+		String requestgetName = request.getParameter("whoacceptfriend");
 		rds = new RDSManagement();
 		try {
-			rds.acceptRequest(userName, friendName);
+			rds.acceptRequest(requestgetName, requestsendName);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

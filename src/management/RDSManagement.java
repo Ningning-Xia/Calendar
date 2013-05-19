@@ -321,7 +321,8 @@ public class RDSManagement {
 		return true;
 	}
 	
-	public void acceptRequest(String sendName,String receiveName) throws SQLException{
+	public void acceptRequest(String requestgetName,String requestsendName) throws SQLException{
+		//acceptRequest(requestgetName, requestsendName);
 		int sendid, friendid;
 		String sql1, sql2,sql3;
 		int status = 2;
@@ -329,15 +330,16 @@ public class RDSManagement {
 		
 		try{
 			conn = getConnection();
-			sendid = getUidByName(sendName);
-			friendid = getUidByName(receiveName);
-			sql1 = "select * from friend where uid1 = " + sendid + " and uid2 = " + friendid;
+			sendid = getUidByName(requestgetName);
+			friendid = getUidByName(requestsendName);
+			System.out.println(sendid + " " + friendid);
+			sql1 = "select * from friend where uid1 = " + friendid + " and uid2 = " + sendid;
 			System.out.println(sql1);
 			st = (Statement)conn.createStatement();
 			res = st.executeQuery(sql1);
 			if(res.next()){
-				sql2 = "update friend set states = " + status + " where uid1 = " + sendid + 
-						" and uid2 = " + friendid;
+				sql2 = "update friend set states = " + status + " where uid1 = " + friendid + 
+						" and uid2 = " + sendid;
 				st = (Statement)conn.createStatement();
 				System.out.println(sql2);
 				st.executeUpdate(sql2);
