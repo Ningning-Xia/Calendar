@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,8 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import table.eventTable;
 import table.userTable;
 
+import management.RDSManagement;
+import model.Event;
 import model.User;
 
 /**
@@ -73,6 +77,12 @@ public class LoginServlet extends HttpServlet {
 			try {
 				request.setAttribute("user",user);
 			    request.getSession().setAttribute("user", user);
+				int uid = user.getUid();
+				
+				ArrayList<Event> eventList = new ArrayList<Event>();
+				RDSManagement rds = new RDSManagement();
+				eventList = eventTable.getEventsByTime(uid);
+				request.getSession().setAttribute("eventList", eventList);
 				RequestDispatcher view = request.getRequestDispatcher("calendar.jsp");
 				view.forward(request,response);
 			} catch (Exception e) {

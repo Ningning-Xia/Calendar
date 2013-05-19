@@ -26,6 +26,7 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 
 import management.RDSManagement;
 import management.S3Class;
+import model.Event;
 
 /**
  * Servlet implementation class addEventServlet
@@ -93,6 +94,10 @@ public class addEventServlet extends HttpServlet {
 		}
 
 		request.setAttribute("uid", uid);
+
+		ArrayList<Event> eventList = new ArrayList<Event>();
+		eventList = eventTable.getEventsByTime(uid);
+		request.getSession().setAttribute("eventList", eventList);
 		RequestDispatcher view = request
 				.getRequestDispatcher("/listEventServlet");
 		view.forward(request, response);

@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 import javax.servlet.RequestDispatcher;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import table.eventTable;
 
 import management.RDSManagement;
+import model.Event;
 
 /**
  * Servlet implementation class DeleteEventServlet
@@ -46,8 +48,14 @@ public class DeleteEventServlet extends HttpServlet {
 		//s3_obj.s3.deleteObject(bucketName, key);
 		
 		RDSManagement rds = new RDSManagement();
+		int uid = eventTable.getUidByEid(key);
+		System.out.println("Uid: "+uid);
 		eventTable.deleteEventById(key);
-		
+		ArrayList<Event> eventList = new ArrayList<Event>();
+
+		eventList = eventTable.getEventsByTime(uid);
+
+		request.getSession().setAttribute("eventList", eventList);
 		RequestDispatcher view = request.getRequestDispatcher("/listEventServlet");
 		view.forward(request, response);
 	}

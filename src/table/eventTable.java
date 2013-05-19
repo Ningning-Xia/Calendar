@@ -192,6 +192,34 @@ public class eventTable {
 		}
 
 	}
+	public static int getUidByEid(int eid){
+		int uid=0;
+		try{
+			conn = RDSManagement.getConnection();
+			String sql = "Select uid from Event where eid = " + eid + ";";
+			System.out.println(sql);
+			st = (Statement) conn.createStatement();
+			ResultSet rs_tmp = st.executeQuery(sql);
+			while (rs_tmp.next()) {
+				uid = Integer.parseInt(rs_tmp.getString("uid"));
+			}
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+
+		} finally {
+			try {
+				st.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return uid;
+	}
 	
 	public static String getVideoNameByEid(int eid) {
 		String video = null;
