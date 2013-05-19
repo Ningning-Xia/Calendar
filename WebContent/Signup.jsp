@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"
-	import = "model.User"%>
+	pageEncoding="ISO-8859-1" import="model.User"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -23,39 +22,61 @@
 	});
 </script>
 
-  <SCRIPT LANGUAGE = "JavaScript">
-function check()
-{
-var account=document.SignupForm.account.value;
-var email=document.SignupForm.email.value;
-var Pass=document.SignupForm.Pass.value;
-var checkPass=document.SignupForm.checkPass.value;
+<SCRIPT LANGUAGE="JavaScript">
+	function check() {
+		var account = document.SignupForm.account.value;
+		var email = document.SignupForm.email.value;
+		var Pass = document.SignupForm.Pass.value;
+		var checkPass = document.SignupForm.checkPass.value;
 
-	if(account.length<1)
-	{alert("The account should not be empty");
-	return false;
+		if (account.length < 1) {
+			alert("The account should not be empty");
+			return false;
+		}
+
+		if (email.length < 1) {
+			alert("The email should not be empty");
+			return false;
+		}
+
+		if (!checkEmail()) {
+			return false;
+		}
+
+		if (Pass.length < 1) {
+			alert("The new Password should not be empty");
+			return false;
+		}
+
+		if (checkPass.length < 1) {
+			alert("The checked Password should not be empty");
+			return false;
+		}
+
+		if (checkPass != Pass) {
+			alert("The checked Password should be the same as the new Password");
+			return false;
+		}
+	}
+
+	function checkEmail() {
+		var email = document.SignupForm.email.value;
+		;
+		var re = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+		var i;
+		if (!email.equals("")) {
+			for (i = 0; i < email.length; i++) {
+				if (!re.test(email[i])) {
+					document.getElementById("invitelist").style.backgroundColor = "lightblue";
+					alert("Your input " + email[i]
+							+ " is not a valid email address.");
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 	
-	if(email.length<1)
-	{alert("The email should not be empty");
-	return false;
-	}
-  
-  if(Pass.length<1)
-  {alert("The new Password should not be empty");
-  return false;
-  }
-  
-  if(checkPass.length<1)
-  {alert("The checked Password should not be empty");
-  return false;
-  }
-  
-  if(checkPass!=Pass) 
-  {alert("The checked Password should be the same as the new Password");
-  return false;
-  } 
-}
 </SCRIPT>
 
 
@@ -99,38 +120,38 @@ body {
 	<br>
 	<div id="main_div">
 		<body>
-			<form name = "SignupForm" class="form-signin" name="Signup"
+			<form name="SignupForm" class="form-signin" name="Signup"
 				onsubmit="return check()" method="post" action="SignupServlet">
-				<table align = "center">
+				<table align="center">
 					<tr>
 						<td colspan="2" align="center">
 							<h2 class="form-signin-heading">Sign Up</h2>
 						</td>
 					</tr>
-					
-					<tr> <td> <br></td></tr>
-					
+
 					<tr>
-						
-						<td><input type="hidden" name="uid" value=""/></td>
+						<td><br></td>
+					</tr>
+
+					<tr>
+
+						<td><input type="hidden" name="uid" value="" /></td>
 					</tr>
 					<tr>
 						<td>Account</td>
-						<td><input type="text" name="account" value=""/></td>
+						<td><input type="text" name="account" value="" /></td>
 					</tr>
 					<tr>
 						<td>Email</td>
-						<td><input type="text" name="email" value=""/></td>
+						<td><input type="text" name="email" value="" /></td>
 					<tr>
 					<tr>
 						<td>Password</td>
-						<td><input type="password" name="Pass" value="" />
-						</td>
+						<td><input type="password" name="Pass" value="" /></td>
 					</tr>
 					<tr>
 						<td>check Password</td>
-						<td><input type="password" name="checkPass" value="" />
-						</td>
+						<td><input type="password" name="checkPass" value="" /></td>
 					</tr>
 					<tr>
 						<td colspan="2" align="center">
@@ -138,18 +159,30 @@ body {
 							<button class="button" type="reset">reset</button>
 						</td>
 					</tr>
-					<% if (request.getAttribute("duplicate_account")!=null) {
-						String duplicate_account = (String)request.getAttribute("duplicate_account");
-						%>
-						<tr> <td colspan = "2"> <%= duplicate_account %> </td> </tr>
-					<% }%>
-					
-						<% if (request.getAttribute("duplicate_email")!=null) {
-						String duplicate_account = (String)request.getAttribute("duplicate_email");
-						%>
-						<tr> <td colspan = "2"> <%= duplicate_account %> </td> </tr>
-					<% }%>
-					
+					<%
+						if (request.getAttribute("duplicate_account") != null) {
+							String duplicate_account = (String) request
+									.getAttribute("duplicate_account");
+					%>
+					<tr>
+						<td colspan="2"><%=duplicate_account%></td>
+					</tr>
+					<%
+						}
+					%>
+
+					<%
+						if (request.getAttribute("duplicate_email") != null) {
+							String duplicate_account = (String) request
+									.getAttribute("duplicate_email");
+					%>
+					<tr>
+						<td colspan="2"><%=duplicate_account%></td>
+					</tr>
+					<%
+						}
+					%>
+
 				</table>
 			</form>
 		</body>

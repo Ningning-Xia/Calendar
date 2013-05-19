@@ -46,8 +46,12 @@ public class SendEmails extends HttpServlet {
 		email = new Email(fromAddr, toAddr, subject,content);
 		emanage = new EmailManage();
 		emanage.sendEmail(email);
+<<<<<<< HEAD
 		
 		RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/addFriends.jsp");
+=======
+		RequestDispatcher requestDispatcher = getServletContext().getRequestDispatcher("/EmailTool.jsp");
+>>>>>>> 71b7dc5a9d743d5e04a30f6e1606405f5105c5a9
 		requestDispatcher.forward(request, response);
 	}
 

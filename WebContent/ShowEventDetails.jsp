@@ -46,13 +46,13 @@
 		</tr>
 		<tr><th>Location:</th> 
 		<td><%= location %></td></tr>
-		
+		<!--  
 		<tr><th>Picture:</th>
 		<td><%=picture %></td></tr>
 		
 		<tr><th>Video:</th>
 		<td><%= video %></td></tr>
-		
+		-->
 		<tr><th>Participants:</th>
 		<td>
 		

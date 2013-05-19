@@ -35,8 +35,13 @@ public class RDSManagement {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			String url = DBurl;
+<<<<<<< HEAD
 			//conn = DriverManager.getConnection(url, "root", "123456");
 			conn = DriverManager.getConnection(url, "judy", "jj890521");
+=======
+			conn = DriverManager.getConnection(url, "root", "12345678");
+			//conn = DriverManager.getConnection(url, "judy", "jj890521");
+>>>>>>> 71b7dc5a9d743d5e04a30f6e1606405f5105c5a9
 
 			if (conn != null) {
 				System.out.println("get datasource succeed!");

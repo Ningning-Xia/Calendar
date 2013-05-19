@@ -22,6 +22,7 @@ public class EmailManage {
 		credentials = new PropertiesCredentials(EmailManage.class.getResourceAsStream("AwsCredentials.properties"));
 		credentials.getAWSAccessKeyId();
 		credentials.getAWSSecretKey();
+		System.out.println("Need Credential information: "+ credentials.getAWSAccessKeyId() + " " + credentials.getAWSSecretKey());
 		destination = new Destination();
 		subject = new Content();
 		textBody = new Content();

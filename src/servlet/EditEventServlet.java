@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import table.eventTable;
 
 import management.RDSManagement;
+import model.Event;
 
 /**
  * Servlet implementation class EditEventServlet
@@ -40,7 +41,8 @@ public class EditEventServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		int eid = Integer.parseInt(request.getParameter("key"));
+		int eid = Integer.parseInt(request.getParameter("eid"));
+		int uid = Integer.parseInt(request.getParameter("uid"));
 		String event_name = request.getParameter("ename");
 		String start_date = request.getParameter("start-date");
 		String start_time = request.getParameter("start-time");
@@ -56,7 +58,7 @@ public class EditEventServlet extends HttpServlet {
 		
 		String start = start_date + " " + start_time + ":00";
 		String end = end_date + " " +end_time + ":00";
-		int uid = 1;
+		
 		
 		RDSManagement rds = new RDSManagement();
 		eventTable.updateEvent(eid, uid, event_name, start, end, location, pic_URL, video_URL, description, privacy);
@@ -72,7 +74,10 @@ public class EditEventServlet extends HttpServlet {
 			ArrayList<Integer> userList = rds.findUidByEmail(invited_list);
 			rds.addInvitation(eid, userList);  // need to check if exist
 		}
-		
+
+		ArrayList<Event> eventList = new ArrayList<Event>();
+		eventList = eventTable.getEventsByTime(uid);
+		request.getSession().setAttribute("eventList", eventList);
 		RequestDispatcher view = request.getRequestDispatcher("/listEventServlet");
 		view.forward(request, response);
 	}

@@ -92,11 +92,12 @@
 		oCalendarEn.Init();
 	</script>
 
-	<form method="post" name="event_form" action="addEventServlet"
+	<form method="post" name="event_form" id ="event_form" action="addEventServlet"
 		onsubmit="return validate()">
 		<br> <br> <br>
 		<%
 			int uid = -1;
+			int eid = 0;
 			if (session.getAttribute("user") != null) {
 				User user = (User) session.getAttribute("user");
 				String userName = user.getUserName();
@@ -121,11 +122,13 @@
 			String video_URL = "";
 			String description = "";
 			int privacy;
+
 			if (action != null) {
 				option = "Edit";
 				Event event = (Event) request.getAttribute("event");
 				ename = event.getEvent_name();
-
+				eid = event.getEid();
+				uid = event.getUid();
 				strs = event.getStart_time().split(" ");
 				startTime = strs[0];
 				sHour = Integer.parseInt(strs[1].split(":")[0]);
@@ -140,6 +143,11 @@
 				description = event.getDescription();
 				privacy = event.getPrivacy();
 				invite = event.getEmailList();
+				%>
+				<script>
+				event_form.action="EditEventServlet";
+				</script>
+				<%
 			}
 		%>
 		<table id="create-event">
@@ -152,7 +160,9 @@
 			</tr>
 			<tr>
 			<tr>
-				<td><input type="hidden" name="uid" value="<%=uid%>" /></td>
+				<td><input type="hidden" name="uid" value="<%=uid%>" />
+				<input type="hidden" name="eid" value="<%=eid%>" /></td>
+				
 			</tr>
 			<th>Event Name:</th>
 			<td><input type="text" name="ename" id="ename"
