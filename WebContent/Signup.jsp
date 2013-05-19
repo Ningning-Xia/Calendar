@@ -31,6 +31,15 @@ var email=document.SignupForm.email.value;
 var Pass=document.SignupForm.Pass.value;
 var checkPass=document.SignupForm.checkPass.value;
 
+	if(account.length<1)
+	{alert("The account should not be empty");
+	return false;
+	}
+	
+	if(email.length<1)
+	{alert("The email should not be empty");
+	return false;
+	}
   
   if(Pass.length<1)
   {alert("The new Password should not be empty");
@@ -92,12 +101,15 @@ body {
 		<body>
 			<form name = "SignupForm" class="form-signin" name="Signup"
 				onsubmit="return check()" method="post" action="SignupServlet">
-				<table>
+				<table align = "center">
 					<tr>
 						<td colspan="2" align="center">
-							<h2 class="form-signin-heading">Your Profile</h2>
+							<h2 class="form-signin-heading">Sign Up</h2>
 						</td>
 					</tr>
+					
+					<tr> <td> <br></td></tr>
+					
 					<tr>
 						
 						<td><input type="hidden" name="uid" value=""/></td>
@@ -126,10 +138,16 @@ body {
 							<button class="button" type="reset">reset</button>
 						</td>
 					</tr>
-					<% if (request.getAttribute("message")!=null) {
-						String message = (String)request.getAttribute("message");
+					<% if (request.getAttribute("duplicate_account")!=null) {
+						String duplicate_account = (String)request.getAttribute("duplicate_account");
 						%>
-						<tr> <td colspan = "2"> <%= message %> </td> </tr>
+						<tr> <td colspan = "2"> <%= duplicate_account %> </td> </tr>
+					<% }%>
+					
+						<% if (request.getAttribute("duplicate_email")!=null) {
+						String duplicate_account = (String)request.getAttribute("duplicate_email");
+						%>
+						<tr> <td colspan = "2"> <%= duplicate_account %> </td> </tr>
 					<% }%>
 					
 				</table>
