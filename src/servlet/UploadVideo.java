@@ -16,10 +16,10 @@ import javax.servlet.http.HttpServletResponse;
 import management.S3Class;
 import model.User;
 
-import org.apache.tomcat.util.http.fileupload.FileItemIterator;
+/*import org.apache.tomcat.util.http.fileupload.FileItemIterator;
 import org.apache.tomcat.util.http.fileupload.FileItemStream;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;*/
 
 import table.eventTable;
 
@@ -56,7 +56,7 @@ public class UploadVideo extends HttpServlet {
 		// TODO Auto-generated method stub
 		S3Class s3_obj = new S3Class();
 
-		boolean isMulti = ServletFileUpload.isMultipartContent(request);
+		/*boolean isMulti = ServletFileUpload.isMultipartContent(request);
 		if (isMulti) {
 			System.out.println("1");
 			ServletFileUpload upload = new ServletFileUpload();
@@ -99,19 +99,7 @@ public class UploadVideo extends HttpServlet {
 							File tempFile = File
 									.createTempFile(tmpName, ".tmp");
 							tempFile.deleteOnExit();
-							/*
-							 * FileOutputStream fout = null;
-							 * 
-							 * try { fout = new FileOutputStream(tempFile); int
-							 * c;
-							 * 
-							 * while ((c = inputStream.read()) != -1) {
-							 * fout.write(c); } } catch (Exception e) {
-							 * System.err.println(e); } finally { if
-							 * (inputStream != null) { inputStream.close(); } if
-							 * (fout != null) { fout.close(); } }
-							 */
-
+							
 							OutputStream outputStream = null;
 							try {
 								System.out.println("5");
@@ -148,8 +136,10 @@ public class UploadVideo extends HttpServlet {
 				}
 			} catch (Exception e) {
 			}
-		}
+		}*/
 		
+		String test = request.getParameter("whoseeid");
+		System.out.println("It's pure test " + test);
 		RequestDispatcher view = request.getRequestDispatcher("UserHome.jsp");
 		view.forward(request, response);
 	}

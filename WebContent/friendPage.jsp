@@ -43,6 +43,7 @@
 <th>Created By</th>
 <th>Start Time</th>
 <th>End Time</th>
+<th>
 </tr>
 
 <% String ename, startTime, endTime;

@@ -230,4 +230,14 @@
     <servlet-name>ViewVideoServlet</servlet-name>
     <url-pattern>/ViewVideoServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>testservlet</display-name>
+    <servlet-name>testservlet</servlet-name>
+    <servlet-class>servlet.testservlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>testservlet</servlet-name>
+    <url-pattern>/testservlet</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -25,14 +25,15 @@
 <br>
 <div id="main_div">
 
-<form id="form1" action="UploadVideo" method="post"
-		enctype="multipart/form-data">
-		<% 
+<form action="UploadVideo" method="post">
+		<% String test = null;
 		if (request.getAttribute("eid")!=null){
-				
-				%>
-				<input type="text" name="eid" value="<%=request.getAttribute("eid") %>" />
-				<%} %>
+			test = (String)request.getAttribute("eid");
+			out.println(test);}%>
+			
+			
+				<input type="text" name="whoseeid" value=<%=test %> />
+
 		<fieldset>
 			<legend>Video Upload:</legend>
 			Select a file to upload: <input class = "button" type="file" name="file" size="50" />
@@ -55,7 +56,7 @@
 			}
 		%>
 		</fieldset>
-	</form>
+</form>
 
 <H2><font color ="white"> Your Video List: </font> </H2>
 <%if (request.getAttribute("video") != null) {
