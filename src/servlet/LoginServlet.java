@@ -73,7 +73,7 @@ public class LoginServlet extends HttpServlet {
 			try {
 				request.setAttribute("user",user);
 			    request.getSession().setAttribute("user", user);
-				RequestDispatcher view = request.getRequestDispatcher("UserHome.jsp");
+				RequestDispatcher view = request.getRequestDispatcher("calendar.jsp");
 				view.forward(request,response);
 			} catch (Exception e) {
 				e.printStackTrace();

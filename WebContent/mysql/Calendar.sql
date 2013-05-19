@@ -17,8 +17,10 @@ uid1 int,
 uid2 int,
 states int,
 primary key (fid),
-foreign key (uid1) references User (uid),
-foreign key (uid2) references User (uid));
+foreign key (uid1) references User (uid)
+on delete cascade,
+foreign key (uid2) references User (uid)
+on delete cascade);
 
 
 
@@ -37,14 +39,16 @@ video varchar(255),
 pic varchar(255),
 privacy int,
 primary key (eid),
-foreign key (uid) references User (uid));
+foreign key (uid) references User (uid)
+on delete cascade);
 
 create table Photo(
 eid int,
 pid int,
 pname varchar(225),
 primary key (pid),
-foreign key (eid) references Event (eid));
+foreign key (eid) references Event (eid)
+on delete cascade);
 
 //action = 0 means Default;
 //action = 1 means Accept;
@@ -55,8 +59,10 @@ eid int,
 uid int,
 action int,
 primary key (eid, uid),
-foreign key (eid) references Event (eid),
-foreign key (uid) references User (uid));
+foreign key (eid) references Event (eid)
+on delete cascade,
+foreign key (uid) references User (uid)
+on delete cascade);
 
 create table EmailList(
 emid int,

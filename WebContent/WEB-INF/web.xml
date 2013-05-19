@@ -270,4 +270,14 @@
     <servlet-name>ViewPhotoServlet</servlet-name>
     <url-pattern>/ViewPhotoServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DeletePhotoServlet</display-name>
+    <servlet-name>DeletePhotoServlet</servlet-name>
+    <servlet-class>servlet.DeletePhotoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeletePhotoServlet</servlet-name>
+    <url-pattern>/DeletePhotoServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

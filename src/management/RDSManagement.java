@@ -16,8 +16,8 @@ import model.Invitation;
 public class RDSManagement {
 
 	//public static String DBurl = "jdbc:mysql://mycalendar.cthu6j2tpw8v.us-east-1.rds.amazonaws.com:3306/mycalendar";
-	//public static String DBurl = "jdbc:mysql://localhost:3306/mycalendar";
-	public static String DBurl = "jdbc:mysql://judyjava.ccbbwwkvrqk2.us-east-1.rds.amazonaws.com:3306/video";
+	public static String DBurl = "jdbc:mysql://localhost:3306/mycalendar";
+	//public static String DBurl = "jdbc:mysql://judyjava.ccbbwwkvrqk2.us-east-1.rds.amazonaws.com:3306/video";
 	public static Connection conn;
 	public static Statement st;
 
@@ -37,8 +37,8 @@ public class RDSManagement {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			String url = DBurl;
+			conn = DriverManager.getConnection(url, "root", "123456");
 			//conn = DriverManager.getConnection(url, "judy", "jj890521");
-			conn = DriverManager.getConnection(url, "judy", "jj890521");
 
 			if (conn != null) {
 				System.out.println("get datasource succeed!");

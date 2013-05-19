@@ -210,7 +210,7 @@
 				<th>Location:</th>
 				<td><input type="text" name="location" value="<%=location%>" /></td>
 			</tr>
-
+<!-- 
 
 			<tr>
 				<th>Picture:</th>
@@ -232,7 +232,7 @@
  %> <input type="file"
 					name="video" size="50" /></td>
 			</tr>
-
+ -->
 			<tr>
 				<th>Invite Friend:</th>
 				<td>(Input email addresses, separated by ;)<br> <textarea

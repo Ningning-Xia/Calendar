@@ -14,7 +14,8 @@ public class photoTable {
 	private static Statement st;
 	
 	public static void main(String[] args) {
-		insertOnePhoto(1, "photo1");
+		//insertOnePhoto(1, "photo1");
+		deleteOnePhoto(4);
 	}
 	
 	public static int getMaxPID() {
@@ -61,6 +62,30 @@ public class photoTable {
 			}
 		}
 		return pid;	
+	}
+	
+	public static void deleteOnePhoto(int pid) {
+		try {
+			conn = RDSManagement.getConnection();
+			st = (Statement) conn.createStatement();
+			String sql = "delete from  Photo where pid =" + pid + ";";  
+			System.out.println(sql);
+			int count = st.executeUpdate(sql);
+			System.out.println("Deleted " + count + " item into Photo");
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				st.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public static ArrayList<Photo> getPhotosByEid(int eid) {
