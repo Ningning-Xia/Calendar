@@ -39,6 +39,13 @@ privacy int,
 primary key (eid),
 foreign key (uid) references User (uid));
 
+create table Photo(
+eid int,
+pid int,
+pname varchar(225),
+primary key (pid),
+foreign key (eid) references Event (eid));
+
 //action = 0 means Default;
 //action = 1 means Accept;
 //action = 2 means Maybe;

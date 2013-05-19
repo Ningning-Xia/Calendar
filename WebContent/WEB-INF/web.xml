@@ -230,4 +230,44 @@
     <servlet-name>ViewVideoServlet</servlet-name>
     <url-pattern>/ViewVideoServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ListPhotoServlet</display-name>
+    <servlet-name>ListPhotoServlet</servlet-name>
+    <servlet-class>servlet.ListPhotoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ListPhotoServlet</servlet-name>
+    <url-pattern>/ListPhotoServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UploadPhotoServlet</display-name>
+    <servlet-name>UploadPhotoServlet</servlet-name>
+    <servlet-class>servlet.UploadPhotoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UploadPhotoServlet</servlet-name>
+    <url-pattern>/UploadPhotoServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>TestServlet</display-name>
+    <servlet-name>TestServlet</servlet-name>
+    <servlet-class>servlet.TestServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TestServlet</servlet-name>
+    <url-pattern>/TestServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ViewPhotoServlet</display-name>
+    <servlet-name>ViewPhotoServlet</servlet-name>
+    <servlet-class>servlet.ViewPhotoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ViewPhotoServlet</servlet-name>
+    <url-pattern>/ViewPhotoServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

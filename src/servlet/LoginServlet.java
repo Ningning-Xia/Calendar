@@ -45,7 +45,18 @@ public class LoginServlet extends HttpServlet {
 		if (userName!=null)
 		{
 			user = userTable.getUserByUsername(userName);
-			if(!password.equals(user.getPassword()))
+			if (user == null) {
+				try {
+					String error = "Wrong accout or password, try again.";
+					request.setAttribute("error",error);
+					RequestDispatcher view = request.getRequestDispatcher("Login.jsp");
+					view.forward(request,response);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+			else if(!password.equals(user.getPassword()))
 			{
 				System.out.println(password);
 				System.out.println(user.getPassword());

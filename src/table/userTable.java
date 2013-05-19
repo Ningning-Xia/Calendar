@@ -40,7 +40,7 @@ public class userTable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("User id " + user.getUid() + " User Name: " + user.getUserName());
+		//System.out.println("User id " + user.getUid() + " User Name: " + user.getUserName());
 		return user;		
 	}
 	
