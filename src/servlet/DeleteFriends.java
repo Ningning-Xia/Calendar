@@ -37,7 +37,7 @@ public class DeleteFriends extends HttpServlet {
 		// TODO Auto-generated method stub
 		String deleteName = request.getParameter("friend");
 		String userName = request.getParameter("whodeletefriend");
-		System.out.println(userName);
+		System.out.println(userName + deleteName);
 		boolean isDeleted = false;
 		rds = new RDSManagement();
 		try {

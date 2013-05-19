@@ -29,6 +29,25 @@
 	<br>
 	<div id="main_div">
 
+<<<<<<< HEAD
+<form action="UploadVideo" method="post">
+		<% String test = null;
+		if (request.getAttribute("eid")!=null){
+			test = (String)request.getAttribute("eid");
+			out.println(test);}%>
+			
+			
+				<input type="text" name="whoseeid" value=<%=test %> />
+
+		<fieldset>
+			<legend>Video Upload:</legend>
+			Select a file to upload: <input class = "button" type="file" name="file" size="50" />
+			<br /> <input type="submit" class="button" value="Upload File" /> <br>
+			<% 
+			if (request.getAttribute("wrongType")!=null){
+				String wrongType =(String)request.getAttribute("wrongType");
+				//out.println(wrongType); 
+=======
 		<form id="form1" method="post"
 			enctype="multipart/form-data">
 			<%
@@ -59,6 +78,7 @@
 						String uploadSucceed = (String) request
 								.getAttribute("uploadSucceed");
 						//out.println(wrongType);
+>>>>>>> da525bcea2f8e5babcf4ac2e100bfae38ff917a7
 				%>
 				<font color="blue"><%=uploadSucceed%> </font>
 				<%
@@ -99,6 +119,11 @@
 			}
 			}
 		%>
+<<<<<<< HEAD
+		</fieldset>
+</form>
+=======
+>>>>>>> da525bcea2f8e5babcf4ac2e100bfae38ff917a7
 
 
 		<%

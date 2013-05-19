@@ -232,6 +232,15 @@
   </servlet-mapping>
   <servlet>
     <description></description>
+<<<<<<< HEAD
+    <display-name>testservlet</display-name>
+    <servlet-name>testservlet</servlet-name>
+    <servlet-class>servlet.testservlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>testservlet</servlet-name>
+    <url-pattern>/testservlet</url-pattern>
+=======
     <display-name>ListPhotoServlet</display-name>
     <servlet-name>ListPhotoServlet</servlet-name>
     <servlet-class>servlet.ListPhotoServlet</servlet-class>
@@ -289,5 +298,6 @@
   <servlet-mapping>
     <servlet-name>SignupServlet</servlet-name>
     <url-pattern>/SignupServlet</url-pattern>
+>>>>>>> da525bcea2f8e5babcf4ac2e100bfae38ff917a7
   </servlet-mapping>
 </web-app>
